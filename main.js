@@ -133,6 +133,9 @@ function httpsReqCreds() {
             adapter.log.debug("access_token: "+ tokenData.access_token);
             adapter.log.debug("EXP: "+tokenData.expires_in);
             adapter.log.debug("refresh_token: "+tokenData.refresh_token);
+            adapter.setState('credentials.access_token', tokenData.access_token , true);
+            adapter.setState('credentials.exp', tokenData.expires_in , true);
+            adapter.setState('credentials.refresh_token', tokenData.refresh_token , true);
       });
 
   });
