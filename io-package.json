@@ -69,7 +69,7 @@
 			"common": {
 				"name": "access_token",
 				"type": "string",
-				"role": "value.credentials",
+				"role": "value.info",
 				"read": true,
 				"write": false,
 				"desc": "Access Token"
@@ -84,7 +84,7 @@
 			"common": {
 				"name": "expires_in",
 				"type": "string",
-				"role": "value.credentials",
+				"role": "value.info",
 				"read": true,
 				"write": false,
 				"desc": "Expiration Time"
@@ -99,7 +99,7 @@
 			"common": {
 				"name": "refresh_token",
 				"type": "string",
-				"role": "value.credentials",
+				"role": "value.info",
 				"read": true,
 				"write": false,
 				"def": false,
