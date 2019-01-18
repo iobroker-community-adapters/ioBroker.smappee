@@ -1,5 +1,5 @@
 /**
- * solarlog adapter
+ * smappee adapter
  */
 
 /* jshint -W097 */// jshint strict:false
@@ -7,11 +7,17 @@
 'use strict';
 
 const utils = require(__dirname + '/lib/utils'); // Get common adapter utils
-const adapter = new utils.Adapter('solarlog');
-var DeviceIpAdress;
-var Port;
-var https = require('http');
-const cmd = "/getjp"; // Kommandos in der URL nach der Host-Adresse
+const adapter = new utils.Adapter('smappee');
+const DeviceIpAdress = adapter.config.host;
+const Port = adapter.config.port;
+const ClientId = adapter.config.Client_id;
+const ClientS = adapter.config.Client_secret;
+const Username = adapter.config.username;
+const Password = adapter.config.password;
+const SmappeeURL = "app1pub.smappee.net";
+var https = require('https');
+const CmdToken = "/dev/v1/oauth2/token"; // Kommandos in der URL nach der Host-Adresse
+const CmdService = "/dev/v1/servicelocation/"; // Kommandos in der URL nach der Host-Adresse
 var statusuz ="on";
 var numinv = 0;
 var names =[];
@@ -29,7 +35,7 @@ let polling;
 adapter.on('unload', function (callback) {
     try {
         clearInterval(polling);
-        adapter.log.info('[END] Stopping solarlog adapter...');
+        adapter.log.info('[END] Stopping smapee adapter...');
         adapter.setState('info.connection', false, true);
         callback();
     } catch (e) {
@@ -70,7 +76,7 @@ adapter.on('message', function (obj) {
 // is called when databases are connected and adapter received configuration.
 adapter.on('ready', function() {
     if (adapter.config.host) {
-        adapter.log.info('[START] Starting solarlog adapter');
+        adapter.log.info('[START] Starting smappee adapter');
 		adapter.setState('info.connection', true, true);
         main();
     } else adapter.log.warn('[START] No IP-address set');
@@ -79,72 +85,72 @@ adapter.on('ready', function() {
 
 function main() {
     // Vars
-    DeviceIpAdress = adapter.config.host;
-    Port = adapter.config.port;
-    const cmd = "/getjp"; // Kommandos in der URL nach der Host-Adresse
-    var statusuz ="on";
-	var numinv = 0;
-	uzimp = (adapter.config.invimp).toString();
-	adapter.log.debug("InvImp: " + adapter.config.invimp);
-	adapter.log.debug("uzimp: " + uzimp);
-	var data='{"609":null}';
-	var options = {
-		host: DeviceIpAdress,
-		port: Port,
-		path: cmd,
-		method: 'POST',
-		headers: {
-			'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
-			'Content-Type': 'application/json',
-			'Accept': 'applciation/json',
-			'Content-Length': data.length
-		}
-	};
+
     const pollingTime = adapter.config.pollInterval || 300000;
     adapter.log.debug('[INFO] Configured polling interval: ' + pollingTime);
     adapter.log.debug('[START] Started Adapter with: ' + adapter.config.host);
 
-	adapter.log.debug("Options: " + JSON.stringify(options));
-	adapter.log.debug("Data: " + JSON.stringify(data));
+	   httpsReqCreds();
 
-	if (uzimp == "true"){
-		adapter.log.debug("uzimp: " + uzimp);
-		adapter.log.debug("WR Importieren");
+		//httpsReqNumInv(data, options, numinv, uzimp, defobjUZ()); //Anlegen eines Channels pro Unterz�hler mit den Objekten Wert und Status
 
-		httpsReqNumInv(data, options, numinv, uzimp, defobjUZ()); //Anlegen eines Channels pro Unterz�hler mit den Objekten Wert und Status
+		//testend = setInterval(test, 2000); //�berpr�fen ob alle Channels angelegt sind.
 
-		testend = setInterval(test, 2000); //�berpr�fen ob alle Channels angelegt sind.
-
-		//setTimeout(function(){httpsReqDataStandard(cmd, uzimp);},30000); //abfragen der Standard-Werte
 
 
 		if (!polling) {
 			polling = setTimeout(function repeat() { // poll states every [30] seconds
-				httpsReqDataStandard(cmd, uzimp);
+				//httpsReqDataStandard(cmd, uzimp);
 				setTimeout(repeat, pollingTime);
 			}, pollingTime);
 		} // endIf
 
-		}
-	else{
-		adapter.log.debug("uzimp: " + uzimp);
-		adapter.log.debug("WR nicht Importieren");
-		httpsReqDataStandard(cmd, uzimp);
-
-		if (!polling) {
-			polling = setTimeout(function repeat() { // poll states every [30] seconds
-
-				httpsReqDataStandard(cmd, uzimp);
-
-				setTimeout(repeat, pollingTime);
-			}, pollingTime);
-		} // endIf
-	}
-    // all states changes inside the adapters namespace are subscribed
+		// all states changes inside the adapters namespace are subscribed
     adapter.subscribeStates('*');
 
 
 } // endMain
+
+
+function httpsReqCreds() {
+  var data='grant_type=password&client_id='+client_id+'&client_secret='+client_secret+'&username='+username+'&password='+password;
+  var options = {
+      host: SmappeeURL,
+      path: CmdToken,
+      method: 'POST',
+      headers: {
+          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      }
+  };
+  var req = https.request(options, function(res) {
+      adapter.log.debug("http Status: " + res.statusCode);
+      adapter.log.debug('HEADERS: ' + JSON.stringify(res.headers), (res.statusCode != 200 ? "warn" : "info")); // Header (RÃ¼ckmeldung vom Webserver)
+      res.setEncoding('utf8');
+      res.on('data', function(chunk) {
+          adapter.log.debug("Chunk: "+chunk);
+          var tokenData=JSON.parse(chunk);
+            adapter.log.debug("access_token: "+ tokenData.access_token);
+            adapter.log.debug("EXP: "+tokenData.expires_in);
+            adapter.log.debug("refresh_token: "+tokenData.refresh_token);
+      });
+
+  });
+   req.on('error', function(e) { // Fehler abfangen
+          adapter.log.debug('ERROR: ' + e.message,"warn");
+          });
+
+      adapter.log.debug("Data to request body: " + data);
+      // write data to request body
+      (data ? req.write(data) : adapter.log.debug("Daten: keine Daten im Body angegeben angegeben"));
+   req.end();
+
+
+  }
+
+
+
+
 
 function test() {
 	adapter.getState("info.numinv", function (err, obj) {

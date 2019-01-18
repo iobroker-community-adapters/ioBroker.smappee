@@ -76,19 +76,28 @@
             </div>
             <div class="row">
                 <div class="input-field col col s3">
-                    <input class="value" id="host" type="text"/>
-                    <label for="host" class="translate">host</label>
-                    <span class="translate">host</span>
+                    <input class="value" id="Client_id" type="text"/>
+                    <label for="Client_id" class="translate">Client_id</label>
+                    <span class="translate">Client_id</span>
+                </div>
+                <div class="input-field col col s3">
+                    <input class="value" id="Client_secret" type="text"/>
+                    <label for="Client_secret" class="translate">Client_secret</label>
+                    <span class="translate">Client_secret</span>
                 </div>
 	          </div>
             <div class="row">
-                <div class="input-field col s12 m6 l4">
-                    <input type="number" class="value" id="port" />
-                    <label for="port" class="translate">port</label>
-                    <!-- Important: label must come directly after input. Label is important. -->
-                    <span class="translate">port</span>
+                <div class="input-field col col s3">
+                    <input class="value" id="username" type="text"/>
+                    <label for="username" class="translate">username</label>
+                    <span class="translate">username</span>
                 </div>
-            </div>
+                <div class="input-field col col s3">
+                    <input class="value" id="password" type="text"/>
+                    <label for="password" class="translate">password</label>
+                    <span class="translate">password</span>
+                </div>
+	          </div>
             <div class="row">
                 <div class="input-field col s12 m6 l4">
                     <input type="number" class="value" id="pollInterval" min="10000" />
@@ -97,12 +106,6 @@
                     <span class="translate">pollInterval</span>
                 </div>
             </div>
-            <div class="row">
-                <div class="input-field col col s3">
-                    <input class="value" id="invimp" type="checkbox"/>
-                    <label for="invimp" class="translate">invimp</label>
-                 </div>
-	     </div>
             <div class="row">
                 <div class="col s12">
                     <p class="translate">on save adapter restarts with new config immediately</p>
