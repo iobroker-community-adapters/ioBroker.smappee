@@ -157,9 +157,7 @@ function httpsReqCreds(optionsToken, dataToken) {
       // write data to request body
       (data ? req.write(data) : adapter.log.debug("Daten: keine Daten im Body angegeben angegeben"));
    req.end();
-
-
-  }
+} //end httpsReqCreds
 
 
 
