@@ -8,16 +8,16 @@
 
 const utils = require(__dirname + '/lib/utils'); // Get common adapter utils
 const adapter = new utils.Adapter('smappee');
-const DeviceIpAdress;
-const Portt;
-const ClientId;
-const ClientS;
-const Username;
-const Password;
-const SmappeeURL;
+var DeviceIpAdress;
+var Port;
+var ClientId;
+var ClientS;
+var Username;
+var Password;
+var SmappeeURL;
 var https = require('https');
-const CmdToken; // Kommandos in der URL nach der Host-Adresse
-const CmdService; // Kommandos in der URL nach der Host-Adresse
+var CmdToken; // Kommandos in der URL nach der Host-Adresse
+var CmdService; // Kommandos in der URL nach der Host-Adresse
 var statusuz ="on";
 var numinv = 0;
 var names =[];
@@ -85,14 +85,14 @@ adapter.on('ready', function() {
 
 function main() {
     // Vars$const DeviceIpAdress = adapter.config.host;
-    const Port = adapter.config.port;
-    const ClientId = adapter.config.Client_id;
-    const ClientS = adapter.config.Client_secret;
-    const Username = adapter.config.username;
-    const Password = adapter.config.password;
-    const SmappeeURL = "app1pub.smappee.net";
-    const CmdToken = "/dev/v1/oauth2/token"; // Kommandos in der URL nach der Host-Adresse
-    const CmdService = "/dev/v1/servicelocation/"; // Kommandos in der URL nach der Host-Adresse
+    var Port = adapter.config.port;
+    var ClientId = adapter.config.Client_id;
+    var ClientS = adapter.config.Client_secret;
+    var Username = adapter.config.username;
+    var Password = adapter.config.password;
+    var SmappeeURL = "app1pub.smappee.net";
+    var CmdToken = "/dev/v1/oauth2/token"; // Kommandos in der URL nach der Host-Adresse
+    var CmdService = "/dev/v1/servicelocation/"; // Kommandos in der URL nach der Host-Adresse
 
     const pollingTime = adapter.config.pollInterval || 300000;
     adapter.log.debug('[INFO] Configured polling interval: ' + pollingTime);
