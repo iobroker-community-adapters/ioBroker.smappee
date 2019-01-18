@@ -1,82 +1,23 @@
-![Logo](admin/solarlog.png)
-# ioBroker.solarlog
+![Logo](admin/smappee.png)
+# ioBroker.smappee
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.solarlog.svg)](https://www.npmjs.com/package/iobroker.solarlog)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.solarlog.svg)](https://www.npmjs.com/package/iobroker.solarlog)
+[![NPM version](http://img.shields.io/npm/v/iobroker.smappee.svg)](https://www.npmjs.com/package/iobroker.smappee)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.smappee.svg)](https://www.npmjs.com/package/iobroker.smappee)
 
-[![NPM](https://nodei.co/npm/iobroker.solarlog.png?downloads=true)](https://nodei.co/npm/iobroker.solarlog/)
+[![NPM](https://nodei.co/npm/iobroker.smappee.png?downloads=true)](https://nodei.co/npm/iobroker.smappee/)
 
-An ioBroker adapter for solarlog - devices
+An ioBroker adapter for smappee - devices
 
-The open JSON-interface (offene Json-Schnittstelle) has to be activated in the Solarlog's configuration menue (Konfiguration - System - Zugangskontrolle - Offene Json-Schnittstelle: aktivieren.)
+#### To crate an instance, you need a "Client_id" and "Client_secret" which are user specific, please contact info@smappee.com to get this information first.
 
-Install adapter, create instance.
-Set Solarlog - IP-adress (192.XXX.X.XXX), port (optional) and polling - intervall (in millilseconds)
-
-Check if all inverter - data is collectet. !! The user-password in solarlog has to be deactivated for this option!!
-Achtung: Damit die Abfrage der Unterzaehler funktioniert, muss das Benutzerpasswort im Solarlog deaktiviert sein
-
-Tested on:
-Solarlog 200PM+ /200BT / 300PM+ / 500 / 1200Meter
+Install adapter, create instance, enter credentials an set polling interval (in millilseconds)
 
 
 ## Changelog
-### 0.1.0
-- optional port declaration, readme updated
-### 0.0.9
-- another bugfix daysum - function
-### 0.0.8
-- bugfix daysum - function
-### 0.0.7
-- import of daily sum of production/consumption per inverter/meter in Wh
-- info connection state fixed
-### 0.0.6
-- optimized evaluation of number of inverters/meters to import
 
-### 0.0.5
-- better readme
-- correct labes in config-dialogue
+### 0.0.1 Development version
 
-Planned for next version: reading solarlog smart energy settings and states
-
-### 0.0.4
-- Inverter-import optional
-- Error - logs refer to functions
-- better readme
-
-Planned for next version: reading solarlog smart energy settings and states
-
-### 0.0.3
-New functions added!
-- reads all defined inverters/meters
-- sets objects named as in solarlog
-- gets values (current production/consumption) and states for each inverter
-
-Planned for next version: reading solarlog smart energy settings and states
-
-### 0.0.2 First running version
-
-Defined objects:
-- Time last data sync
-- Installed generator power
-- Total output PAC from all of the inverters and meters in inverter mode.
-- Total output PAC from all of the inverters
-- Average voltage UAC from the inverter
-- Average voltage UDC from the inverter
-- Total yield for the day from all of the inverters
-- Total yield for the previous day from all of the inverters
-- Total yield for the month from all of the inverters
-- Total yield for the year from all of the inverters
-- Total yield from all of the inverters
-- Current total consumption PAC from all of the consumption meters
-- Total consumption from all of the consumption meters
-- Total consumption for the previous day; all of the consumption meters
-- Total consumption for the month; all of the consumption meters
-- Total consumption for the year; all of the consumption meters
-- Accumulated total consumption, all Consumption meter
-
-Planned Objects:
-- Description/Yield/Consuption of all connected inverters and meters
+- in development
 
 
 ## License

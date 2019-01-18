@@ -1,10 +1,10 @@
 {
-	"name": "iobroker.solarlog",
-	"version": "0.1.0",
+	"name": "iobroker.smappee",
+	"version": "0.0.1",
 	"engines": {
     	"node": ">=6.0.0"
 	},
-	"description": "solarlog",
+	"description": "smappee",
 	"author": {
 		"name": "Marcel Adam",
 		"email": "marceladam@gmx.ch"
@@ -15,7 +15,7 @@
 			"email": "marceladam@gmx.ch"
 		}
 	],
-	"homepage": "https://github.com/forelleblau/ioBroker.solarlog",
+	"homepage": "https://github.com/forelleblau/ioBroker.smappee",
 	"license": "MIT",
 	"keywords": [
 		"ioBroker",
@@ -25,7 +25,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/forelleblau/ioBroker.solarlog"
+		"url": "https://github.com/forelleblau/ioBroker.smappee"
 	},
 	"dependencies": {
 		"request": "^2.87.0"
@@ -40,7 +40,7 @@
 		"test": "node node_modules/mocha/bin/mocha --exit"
 	},
 	"bugs": {
-		"url": "https://github.com/forelleblau/ioBroker.solarlog/issues"
+		"url": "https://github.com/forelleblau/ioBroker.smappee/issues"
 	},
 	"readmeFilename": "README.md"
 }
