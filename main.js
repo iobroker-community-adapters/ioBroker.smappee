@@ -90,6 +90,7 @@ function main() {
     var ClientS = adapter.config.Client_secret;
     var Username = adapter.config.username;
     var Password = adapter.config.password;
+    var dataToken='grant_type=password&client_id='+ClientId+'&client_secret='+ClientS+'&username='+Username+'&password='+Password;
     var SmappeeURL = "app1pub.smappee.net";
     var CmdToken = "/dev/v1/oauth2/token"; // Kommandos in der URL nach der Host-Adresse
     var CmdService = "/dev/v1/servicelocation/"; // Kommandos in der URL nach der Host-Adresse
@@ -98,7 +99,7 @@ function main() {
     adapter.log.debug('[INFO] Configured polling interval: ' + pollingTime);
     adapter.log.debug('[START] Started Adapter with: ' + adapter.config.host);
 
-	   httpsReqCreds();
+	   httpsReqCreds(dataToken);
 
 		//httpsReqNumInv(data, options, numinv, uzimp, defobjUZ()); //Anlegen eines Channels pro Unterz�hler mit den Objekten Wert und Status
 
@@ -120,8 +121,8 @@ function main() {
 } // endMain
 
 
-function httpsReqCreds() {
-  var data='grant_type=password&client_id='+ClientId+'&client_secret='+ClientS+'&username='+Username+'&password='+Password;
+function httpsReqCreds(dataToken) {
+  var data=dataToken;
   var options = {
       host: SmappeeURL,
       path: CmdToken,
