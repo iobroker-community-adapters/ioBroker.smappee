@@ -130,7 +130,7 @@ function main() {
 } // endMain
 
 
-function httpsReqCreds(dataToken) {
+function httpsReqCreds(optionsToken, dataToken) {
   var data=dataToken;
   var options=optionsToken;
   var req = https.request(options, function(res) {
