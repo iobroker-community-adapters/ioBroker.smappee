@@ -94,12 +94,21 @@ function main() {
     var SmappeeURL = "app1pub.smappee.net";
     var CmdToken = "/dev/v1/oauth2/token"; // Kommandos in der URL nach der Host-Adresse
     var CmdService = "/dev/v1/servicelocation/"; // Kommandos in der URL nach der Host-Adresse
+    var optionsToken = {
+        host: SmappeeURL,
+        path: CmdToken,
+        method: 'POST',
+        headers: {
+            'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        }
+    };
 
     const pollingTime = adapter.config.pollInterval || 300000;
     adapter.log.debug('[INFO] Configured polling interval: ' + pollingTime);
     adapter.log.debug('[START] Started Adapter with: ' + adapter.config.host);
 
-	   httpsReqCreds(dataToken);
+	   httpsReqCreds(optionsToken, dataToken);
 
 		//httpsReqNumInv(data, options, numinv, uzimp, defobjUZ()); //Anlegen eines Channels pro Unterz�hler mit den Objekten Wert und Status
 
@@ -123,15 +132,7 @@ function main() {
 
 function httpsReqCreds(dataToken) {
   var data=dataToken;
-  var options = {
-      host: SmappeeURL,
-      path: CmdToken,
-      method: 'POST',
-      headers: {
-          'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      }
-  };
+  var options=optionsToken;
   var req = https.request(options, function(res) {
       adapter.log.debug("http Status: " + res.statusCode);
       adapter.log.debug('HEADERS: ' + JSON.stringify(res.headers), (res.statusCode != 200 ? "warn" : "info")); // Header (RÃ¼ckmeldung vom Webserver)
