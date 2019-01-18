@@ -75,7 +75,7 @@ adapter.on('message', function (obj) {
 
 // is called when databases are connected and adapter received configuration.
 adapter.on('ready', function() {
-    if (adapter.config.client_secret) {
+    if (adapter.config.Client_secret) {
         adapter.log.info('[START] Starting smappee adapter');
 		adapter.setState('info.connection', true, true);
         main();
@@ -121,7 +121,7 @@ function main() {
 
 
 function httpsReqCreds() {
-  var data='grant_type=password&client_id='+client_id+'&client_secret='+client_secret+'&username='+username+'&password='+password;
+  var data='grant_type=password&client_id='+Clientid+'&client_secret='+ClientS+'&username='+username+'&password='+password;
   var options = {
       host: SmappeeURL,
       path: CmdToken,
