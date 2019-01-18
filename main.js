@@ -121,7 +121,7 @@ function main() {
 
 
 function httpsReqCreds() {
-  var data='grant_type=password&client_id='+ClientId+'&client_secret='+ClientS+'&username='+username+'&password='+password;
+  var data='grant_type=password&client_id='+ClientId+'&client_secret='+ClientS+'&username='+Username+'&password='+Password;
   var options = {
       host: SmappeeURL,
       path: CmdToken,
