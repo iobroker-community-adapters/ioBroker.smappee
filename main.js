@@ -75,7 +75,7 @@ adapter.on('message', function (obj) {
 
 // is called when databases are connected and adapter received configuration.
 adapter.on('ready', function() {
-    if (adapter.config.host) {
+    if (adapter.config.client_secret) {
         adapter.log.info('[START] Starting smappee adapter');
 		adapter.setState('info.connection', true, true);
         main();
