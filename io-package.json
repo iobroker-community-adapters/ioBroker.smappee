@@ -33,6 +33,7 @@
 			"smappee",
 			"smarthome",
 			"energy",
+			"smartmeter",
 			"water"
 		],
 		"readme": "https://github.com/forelleblau/ioBroker.smappee/blob/master/README.md",

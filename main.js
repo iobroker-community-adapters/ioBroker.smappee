@@ -18,6 +18,9 @@ var SmappeeURL;
 var https = require('https');
 var CmdToken; // Kommandos in der URL nach der Host-Adresse
 var CmdService; // Kommandos in der URL nach der Host-Adresse
+var servli;
+var servlocData;
+
 var statusuz ="on";
 var numinv = 0;
 var names =[];
@@ -93,6 +96,7 @@ function main() {
     var dataToken='grant_type=password&client_id='+ClientId+'&client_secret='+ClientS+'&username='+Username+'&password='+Password;
     var SmappeeURL = "app1pub.smappee.net";
     var CmdToken = "/dev/v1/oauth2/token"; // Kommandos in der URL nach der Host-Adresse
+    var cmdServloc = "/dev/v1/servicelocation"; // Kommandos in der URL nach der Host-Adresse
     var CmdService = "/dev/v1/servicelocation/"; // Kommandos in der URL nach der Host-Adresse
     var optionsToken = {
         host: SmappeeURL,
@@ -103,6 +107,7 @@ function main() {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         }
     };
+    var accesstoken;
 
     const pollingTime = adapter.config.pollInterval || 300000;
     adapter.log.debug('[INFO] Configured polling interval: ' + pollingTime);
@@ -140,12 +145,16 @@ function httpsReqCreds(optionsToken, dataToken) {
       res.on('data', function(chunk) {
           adapter.log.debug("Chunk: "+chunk);
           var tokenData=JSON.parse(chunk);
+            accesstoken=tokenData.access_token;
             adapter.log.debug("access_token: "+ tokenData.access_token);
             adapter.log.debug("EXP: "+tokenData.expires_in);
             adapter.log.debug("refresh_token: "+tokenData.refresh_token);
             adapter.setState('credentials.access_token', tokenData.access_token , true);
             adapter.setState('credentials.exp', tokenData.expires_in , true);
             adapter.setState('credentials.refresh_token', tokenData.refresh_token , true);
+
+            httpsReqServloc(accesstoken);
+
       });
 
   });
@@ -158,6 +167,54 @@ function httpsReqCreds(optionsToken, dataToken) {
       (data ? req.write(data) : adapter.log.debug("Daten: keine Daten im Body angegeben angegeben"));
    req.end();
 } //end httpsReqCreds
+
+function httpsReqServloc(accesstoken) {
+
+var options = {
+    host: SmappeeURL,
+    path: cmdServloc,
+    method: 'GET',
+    headers: {
+        'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'Authorization': 'Bearer '+ accesstoken
+    }
+};
+var req = https.request(options, function(res) {
+    adapter.log.debug("http Status: " + res.statusCode);
+    adapter.log.debug('HEADERS: ' + JSON.stringify(res.headers), (res.statusCode != 200 ? "warn" : "info")); // Header (RÃ¼ckmeldung vom Webserver)
+    res.setEncoding('utf8');
+    res.on('data', function(chunk) {
+        adapter.log.debug("Chunk: "+chunk);
+        servlocData=JSON.parse(chunk);
+        servli=servlocData.serviceLocations.length;
+        adapter.log.debug("Anzahl Servicelocations: "+servli);
+
+        for(i=0;i<servli;i++){
+          adapter.setObjectNotExists(servlocData.serviceLocations[0].name, {
+              type: 'channel',
+              role: 'info.serviceLocation',
+              common: {
+                  name: "Servicelocation",
+                  ServLocID: servlocData.serviceLocations[0].serviceLocationId
+              },
+              native: {}
+      		});
+        }
+      });
+
+});
+ req.on('error', function(e) { // Fehler abfangen
+        adapter.log.debug('ERROR: ' + e.message,"warn");
+        });
+
+    adapter.log.debug("Data to request body: " + data);
+    // write data to request body
+    (data ? req.write(data) : adapter.log.debug("Daten: keine Daten im Body angegeben angegeben"));
+ req.end();
+
+
+}
 
 
 
