@@ -18,6 +18,9 @@ var SmappeeURL;
 var https = require('https');
 var CmdToken; // Kommandos in der URL nach der Host-Adresse
 var CmdService; // Kommandos in der URL nach der Host-Adresse
+var cmdServloc;
+var data;
+var options;
 var accesstoken;
 var servli;
 var servlocData;
@@ -114,7 +117,7 @@ function main() {
     adapter.log.debug('[INFO] Configured polling interval: ' + pollingTime);
     adapter.log.debug('[START] Started Adapter with: ' + adapter.config.host);
 
-	   httpsReqCreds(optionsToken, dataToken, httpsReqServloc());
+	   httpsReqCreds(optionsToken, dataToken);
 
 		//httpsReqNumInv(data, options, numinv, uzimp, defobjUZ()); //Anlegen eines Channels pro Unterz�hler mit den Objekten Wert und Status
 
@@ -137,8 +140,8 @@ function main() {
 
 
 function httpsReqCreds(optionsToken, dataToken) {
-  var data=dataToken;
-  var options=optionsToken;
+  data=dataToken;
+  options=optionsToken;
   var req = https.request(options, function(res) {
       adapter.log.debug("http Status: " + res.statusCode);
       adapter.log.debug('HEADERS: ' + JSON.stringify(res.headers), (res.statusCode != 200 ? "warn" : "info")); // Header (RÃ¼ckmeldung vom Webserver)
@@ -170,10 +173,10 @@ function httpsReqCreds(optionsToken, dataToken) {
 } //end httpsReqCreds
 
 function httpsReqServloc(accesstoken) {
-
-var options = {
-    host: SmappeeURL,
-    path: cmdServloc,
+data="";
+options = {
+    host: "app1pub.smappee.net",
+    path: "/dev/v1/servicelocation",
     method: 'GET',
     headers: {
         'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
@@ -191,7 +194,7 @@ var req = https.request(options, function(res) {
         servli=servlocData.serviceLocations.length;
         adapter.log.debug("Anzahl Servicelocations: "+servli);
 
-        for(i=0;i<servli;i++){
+        for(var i=0;i<servli;i++){
           adapter.setObjectNotExists(servlocData.serviceLocations[0].name, {
               type: 'channel',
               role: 'info.serviceLocation',
