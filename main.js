@@ -18,6 +18,7 @@ var SmappeeURL;
 var https = require('https');
 var CmdToken; // Kommandos in der URL nach der Host-Adresse
 var CmdService; // Kommandos in der URL nach der Host-Adresse
+var accesstoken;
 var servli;
 var servlocData;
 
@@ -113,7 +114,7 @@ function main() {
     adapter.log.debug('[INFO] Configured polling interval: ' + pollingTime);
     adapter.log.debug('[START] Started Adapter with: ' + adapter.config.host);
 
-	   httpsReqCreds(optionsToken, dataToken);
+	   httpsReqCreds(optionsToken, dataToken, httpsReqServloc());
 
 		//httpsReqNumInv(data, options, numinv, uzimp, defobjUZ()); //Anlegen eines Channels pro Unterz�hler mit den Objekten Wert und Status
 
