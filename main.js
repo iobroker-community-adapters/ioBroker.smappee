@@ -168,3 +168,11 @@ function main() {
 
 
 } // endMain
+
+// If started as allInOne/compact mode => return function to create instance
+if (module && module.parent) {
+    module.exports = startAdapter;
+} else {
+    // or start the instance directly
+    startAdapter();
+} // endElse
