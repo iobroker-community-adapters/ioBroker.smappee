@@ -19,9 +19,25 @@ Please add an instance of the ioBroker.mqtt - Adapter:
 ![ioBMQ](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTBroker.PNG)
 
 configure the instance as server/broker. Port 1883 as default is ok, feel free to choose any other working.
-Set username and password (you will need this for smappee- and smappee-Adapter configuration.
+Set username and password (you will need this for smappee- and smappee-Adapter configuration:
 
-![ioBMQ](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTConfig.PNG)
+![ioBMC](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTConfig.PNG)
+
+###Activation of Smappee's MQTT publishing.
+
+Open your browser and avigate to the URL: http://X.X.X.X/smappee.html (replace X.X.X.X by Smappee's IP address in your network).
+Click the logon/logoff button and use the password "admin" to Logon.
+
+![smplog](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpelogon.PNG)
+
+Go to the "advanced" section an activate the "Advanced" checkbox in the last field of the table. 
+
+![smplog](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpeadv.PNG)
+
+Then you should be here:
+
+![smplog](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpemqtt.PNG)
+
 
 
 
