@@ -47,9 +47,9 @@ And now it´s time to
 
 ###Install the smappee-adapter
 
-I
+Create an instance of the smappee-adapter and enter username & password you specified configuring your mqtt-broker.
 
-
+please give the adapter some minutes to read the data from your smappy device.
 
 
 
