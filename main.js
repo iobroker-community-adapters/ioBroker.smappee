@@ -11,7 +11,7 @@ let adapter;
 var port;
 var host;
 var username;
-var passwort;
+var password;
 var mqtt = require('mqtt');
 var servloc;
 
