@@ -44,11 +44,8 @@
 		"messagebox": false
 	},
 	"native": {
-		"host": "",
-		"port":80,
-		"pollInterval":300000,
-		"Client_id":"",
-		"Client_secret":"",
+		"host": "localhost",
+		"port":1883,
 		"username":"",
 		"password":""
 	},
@@ -56,7 +53,7 @@
 	"objects": [],
 	"instanceObjects": [
 		{
-			"_id": "credentials",
+			"_id": "info",
 			"type": "channel",
 			"common": {
 			"name": "Information"
@@ -66,46 +63,16 @@
 			}
 		},
 		{
-			"_id": "credentials.access_token",
+			"_id": "info.connection",
 			"type": "state",
 			"common": {
-				"name": "access_token",
-				"type": "string",
-				"role": "value.info",
-				"read": true,
-				"write": false,
-				"desc": "Access Token"
-			},
-			"native": {
-
-			}
-		},
-		{
-			"_id": "credentials.exp",
-			"type": "state",
-			"common": {
-				"name": "expires_in",
-				"type": "string",
-				"role": "value.info",
-				"read": true,
-				"write": false,
-				"desc": "Expiration Time"
-			},
-			"native": {
-
-			}
-		},
-		{
-			"_id": "credentials.refresh_token",
-			"type": "state",
-			"common": {
-				"name": "refresh_token",
-				"type": "string",
-				"role": "value.info",
+				"name": "smappeeconnected",
+				"type": "boolean",
+				"role": "info.connected",
 				"read": true,
 				"write": false,
 				"def": false,
-				"desc": "Refresh Token"
+				"desc": "Is smappee connected?"
 			},
 			"native": {
 
