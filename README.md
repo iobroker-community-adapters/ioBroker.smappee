@@ -13,7 +13,7 @@ An ioBroker adapter for smappee - devices
 This adapter brings you realtime (1s-interval) energy  power data, aggregated data for energy and optional sensor consumption data and access to your switches/plugs of your Smappee - Device to ioBroker.
 
 ## Instructions
-###Installing ioBroker.mqtt - Adapter.
+### Installing ioBroker.mqtt - Adapter.
 Please add an instance of the ioBroker.mqtt - Adapter:
 
 ![ioBMQ](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTBroker.PNG)
@@ -23,7 +23,7 @@ Set username and password (you will need this for smappee- and smappee-Adapter c
 
 ![ioBMC](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTConfig.PNG)
 
-###Activation of Smappee's MQTT publishing.
+### Activation of Smappee's MQTT publishing.
 
 Open your browser and avigate to the URL: http://X.X.X.X/smappee.html (replace X.X.X.X by Smappee's IP address in your network).
 Click the logon/logoff button and use the password "admin" to Logon.
@@ -45,7 +45,7 @@ Then hit "Apply changes and restart monitor".
 
 And now it´s time to
 
-###Install the smappee-adapter
+### Install the smappee-adapter
 
 Create an instance of the smappee-adapter and enter username & password you specified configuring your mqtt-broker.
 
