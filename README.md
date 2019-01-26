@@ -16,7 +16,7 @@ This adapter brings you realtime (1s-interval) energy  power data, aggregated da
 ###Installing ioBroker.mqtt - Adapter.
 Please add an instance of the ioBroker.mqtt - Adapter:
 
-[![Logo](admin/ioBrokerMQTTBroker.jpg)
+[![MQTT](admin/ioBrokerMQTTBroker.jpg)
 
 
 ## Changelog
