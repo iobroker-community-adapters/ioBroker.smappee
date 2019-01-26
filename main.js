@@ -8,10 +8,13 @@
 
 const utils = require(__dirname + '/lib/utils'); // Get common adapter utils
 let adapter;
+var port;
+var host;
+var username;
+var passwort;
 
 var mqtt = require('mqtt');
 var servloc;
-var activePower
 
 
 function startAdapter(options) {
@@ -25,7 +28,6 @@ function startAdapter(options) {
 // when adapter shuts down
 adapter.on('unload', function (callback) {
     try {
-        clearInterval(polling);
         adapter.log.info('[END] Stopping smappee adapter...');
         adapter.setState('info.connection', false, true);
         callback();
@@ -66,12 +68,9 @@ adapter.on('message', function (obj) {
 
 // is called when databases are connected and adapter received configuration.
 adapter.on('ready', function() {
-    if (adapter.config.host) {
-        adapter.log.info('[START] Starting smappee adapter');
-		adapter.setState('info.connection', true, true);
-        main();
-    } else adapter.log.warn('[START] No IP-address set');
-});
+    adapter.setState('info.connection', true, true);
+    main();
+    });
 
 return adapter;
 } // endStartAdapter
@@ -95,7 +94,7 @@ function main() {
 	         var messageJ = JSON.parse(message);
 	         var topicarray = topic.split("/");
 	         adapter.log.debug("Topic: " + topicarray[2]);
-	         switch(topicarray[2] {
+	         switch(topicarray[2]) {
              case "config":
 			          adapter.log.debug("servlocid= " + messageJ.serviceLocationId);
                 adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId, {
@@ -158,7 +157,7 @@ function main() {
                         adapter.setState('Servicelocation' + messageJ.serviceLocationId +'.power.totalPower', message.activePower, true);
                         break;
 			             		}
-	                   }
+
 		} catch(e) {
 				adapter.log.warn("JSON-parse-Fehler Message: " + e.message);
 		}
