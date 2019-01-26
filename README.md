@@ -38,6 +38,8 @@ Then you should be here:
 
 ![smplog](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpemqtt.PNG)
 
+enter your ioBroker´s Ip followed by the port
+
 
 
 
