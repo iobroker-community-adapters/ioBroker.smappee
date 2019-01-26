@@ -28,22 +28,22 @@ Set username and password (you will need this for smappee- and smappee-Adapter c
 Open your browser and avigate to the URL: http://X.X.X.X/smappee.html (replace X.X.X.X by Smappee's IP address in your network).
 Click the logon/logoff button and use the password "admin" to Logon.
 
-![smplog](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpelogon.PNG)
+![smplog](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smplogon.PNG)
 
-Go to the "advanced" section an activate the "Advanced" checkbox in the last field of the table. 
+Go to the "advanced" section an activate the "Advanced" checkbox in the last field of the table.
 
-![smpadv](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpeadv.PNG)
+![smpadv](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpadv.PNG)
 
 Then you should be here:
 
-![smpemq](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpemqtt.PNG)
+![smpemq](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpemqt.PNG)
 
 enter your ioBroker´s Ip followed by the port you specified for the mqtt-broker (default is 1883), i.e. tcp://192.168.1.111:1883
 
 enter username & password you specified configuring your mqtt-broker.
 Then hit "Apply changes and restart monitor".
 
-And now it´s time to 
+And now it´s time to
 
 ###Install the smappee-adapter
 
