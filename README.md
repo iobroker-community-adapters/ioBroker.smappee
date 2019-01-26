@@ -8,9 +8,15 @@
 
 An ioBroker adapter for smappee - devices
 
-#### To crate an instance, you need a "Client_id" and "Client_secret" which are user specific, please contact info@smappee.com to get this information first.
+#### You need to install first ioBroker.MQTT adapter (or use another MQTT-broker) and activate your Smappee's MQTT publishing. Please see the following instructions bevore installing the Smappee adapter.
 
-Install adapter, create instance, enter credentials an set polling interval (in millilseconds)
+This adapter brings you realtime (1s-interval) energy  power data, aggregated data for energy and optional sensor consumption data and access to your switches/plugs of your Smappee - Device to ioBroker.
+
+## Instructions
+###Installing ioBroker.mqtt - Adapter.
+Please add an instance of the ioBroker.mqtt - Adapter:
+
+[![Logo](admin/ioBrokerMQTTBroker.jpg)
 
 
 ## Changelog
