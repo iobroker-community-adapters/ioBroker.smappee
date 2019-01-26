@@ -78,10 +78,10 @@ return adapter;
 
 function main() {
 
-  var host = adapter.config.host;
-  var port = adapter.config.port;
-  var username = adapter.config.username;
-  var password = adapter.config.password;
+  host = adapter.config.host;
+  port = adapter.config.port;
+  username = adapter.config.username;
+  password = adapter.config.password;
 
   var client = mqtt.connect({host: host, port: port, username: username, password: password });
 
