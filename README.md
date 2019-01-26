@@ -32,11 +32,11 @@ Click the logon/logoff button and use the password "admin" to Logon.
 
 Go to the "advanced" section an activate the "Advanced" checkbox in the last field of the table.
 
-![smpadv](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpadv.PNG)
+![smpadv](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpadv.jpeg)
 
 Then you should be here:
 
-![smpemq](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpemqt.PNG)
+![smpemq](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpmqt.PNG)
 
 enter your ioBroker´s Ip followed by the port you specified for the mqtt-broker (default is 1883), i.e. tcp://192.168.1.111:1883
 
