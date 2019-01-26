@@ -25,6 +25,7 @@
 		},
 		"platform": "Javascript/Node.js",
 		"mode": "daemon",
+		"compact": true,
 		"icon": "smappee.png",
 		"materialize": true,
 		"enabled": true,
