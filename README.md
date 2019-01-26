@@ -28,7 +28,7 @@ Set username and password (you will need this for smappee- and smappee-Adapter c
 Open your browser and avigate to the URL: http://X.X.X.X/smappee.html (replace X.X.X.X by Smappee's IP address in your network).
 Click the logon/logoff button and use the password "admin" to Logon.
 
-![smplog](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smplogon.PNG)
+![smplog](ioBroker.smappee/admin/smplogon.png)
 
 Go to the "advanced" section an activate the "Advanced" checkbox in the last field of the table.
 
