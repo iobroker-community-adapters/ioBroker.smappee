@@ -17,7 +17,7 @@ var activePower
 function startAdapter(options) {
     options = options || {};
     Object.assign(options, {
-        name: 'solarlog'
+        name: 'smappee'
     });
 
     adapter = new utils.Adapter(options);
@@ -26,7 +26,7 @@ function startAdapter(options) {
 adapter.on('unload', function (callback) {
     try {
         clearInterval(polling);
-        adapter.log.info('[END] Stopping solarlog adapter...');
+        adapter.log.info('[END] Stopping smappee adapter...');
         adapter.setState('info.connection', false, true);
         callback();
     } catch (e) {
@@ -67,7 +67,7 @@ adapter.on('message', function (obj) {
 // is called when databases are connected and adapter received configuration.
 adapter.on('ready', function() {
     if (adapter.config.host) {
-        adapter.log.info('[START] Starting solarlog adapter');
+        adapter.log.info('[START] Starting smappee adapter');
 		adapter.setState('info.connection', true, true);
         main();
     } else adapter.log.warn('[START] No IP-address set');
@@ -79,26 +79,93 @@ return adapter;
 
 function main() {
 
-var client = mqtt.connect({host: 'localhost', port: 1883, username:'forelleblau', password:'62166216' });
+  var host = adapter.config.host;
+  var port = adapter.config.port;
+  var username = adapter.config.username;
+  var password = adapter.config.password;
+
+  var client = mqtt.connect({host: host, port: port, username: username, password: password });
 
 
-client.on('connect', function(){
-	adapter.log.info("MQTT connected");
-client.subscribe('servicelocation/#');
-client.on('message', function (topic, message) {
+  client.on('connect', function(){
+	   adapter.log.info("MQTT connected");
+     client.subscribe('servicelocation/#');
+     client.on('message', function (topic, message) {
+	      try{
+	         var messageJ = JSON.parse(message);
+	         var topicarray = topic.split("/");
+	         adapter.log.debug("Topic: " + topicarray[2]);
+	         switch(topicarray[2] {
+             case "config":
+			          adapter.log.debug("servlocid= " + messageJ.serviceLocationId);
+                adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId, {
+                  type: 'device',
+                  role: '',
+                  common: {
+                  name: messageJ.serviceLocationId
+                  },
+                  native: {}
+		              });
+                  adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId +'.power', {
+                    type: 'channel',
+                    role: '',
+                    common: {
+                    name: "power"
+                    },
+                    native: {}
+                  });
+                  adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId +'.power.totalPower', {
+                      type: 'state',
+                			common: {
+                				name: 'PAC',
+                				desc: 'Power AC',
+                				type: 'number',
+                				role: "value.pac",
+                				read: true,
+                				write: false,
+                				unit: "W"
+                			},
+                			native: {}
+                		});
+                    adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId +'.power.importEnergy', {
+                        type: 'state',
+                        common: {
+                          name: 'consumption',
+                          desc: 'Energy consumption',
+                          type: 'number',
+                          role: "value.consumption",
+                          read: true,
+                          write: false,
+                          unit: "kWh"
+                        },
+                        native: {}
+                      });
+                      adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId +'.power.exportEnergy', {
+                          type: 'state',
+                          common: {
+                            name: 'producion',
+                            desc: 'Energy production',
+                            type: 'number',
+                            role: "value.production",
+                            read: true,
+                            write: false,
+                            unit: "kWh"
+                          },
+                          native: {}
+                        });
 
-	var messageJ = JSON.parse((JSON.stringify(message)).toString());
-
-	var topicarray = topic.split("/");
-	adapter.log.debug("Topic: " + topicarray[2]);
-	if(topicarray[2]=="config"){
-			adapter.log.debug("servlocid= " + messageJ.serviceLocationId)
-			adapter.log.debug("messageJ: " + messageJ[0]);
-			servloc = JSON.stringify(messageJ)["serviceLocationId"];
+			             adapter.log.debug("messageJ: " + JSON.stringify(messageJ));
+			             servloc = messageJ.serviceLocationId;
 			adapter.log.debug("Servicelocation ID: " + servloc);
 		}
+	if(topicarray[2]=="realtime"){
+	adapter.log.debug("Power: " + messageJ.totalPower);
+	}
+		} catch(e) {
+				adapter.log.warn("JSON-parse-Fehler Message: " + e.message);
+		}
 
-  adapter.log.info("Message: " +  message);
+  ;
 });
 });
 

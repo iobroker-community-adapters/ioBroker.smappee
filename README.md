@@ -38,9 +38,9 @@ Then you should be here:
 
 ![smpmqt](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smpmqt.png)
 
-enter your ioBroker´s Ip followed by the port you specified for the mqtt-broker (default is 1883), i.e. tcp://192.168.1.111:1883
+Enter your ioBroker´s Ip followed by the port you specified for the mqtt-broker (default is 1883), i.e. tcp://192.168.1.111:1883
 
-enter username & password you specified configuring your mqtt-broker.
+Enter username & password you specified configuring your mqtt-broker.
 Then hit "Apply changes and restart monitor".
 
 And now it´s time to
@@ -49,7 +49,9 @@ And now it´s time to
 
 Create an instance of the smappee-adapter and enter username & password you specified configuring your mqtt-broker.
 
-please give the adapter some minutes to read the data from your smappy device.
+If you use other than ioBrokers MQTT-Adapter with default settings, you can optionally specifiy the connection to your MQTT Broker (host & port).
+
+Please give the adapter some minutes to read the data from your smappy device.
 
 
 
