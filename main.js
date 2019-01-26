@@ -153,14 +153,12 @@ function main() {
                           },
                           native: {}
                         });
-
-			             adapter.log.debug("messageJ: " + JSON.stringify(messageJ));
-			             servloc = messageJ.serviceLocationId;
-			adapter.log.debug("Servicelocation ID: " + servloc);
-		}
-	if(topicarray[2]=="realtime"){
-	adapter.log.debug("Power: " + messageJ.totalPower);
-	}
+                        break;
+                      case "realtime":
+                        adapter.setState('Servicelocation' + messageJ.serviceLocationId +'.power.totalPower', message.activePower, true);
+                        break;
+			             		}
+	                   }
 		} catch(e) {
 				adapter.log.warn("JSON-parse-Fehler Message: " + e.message);
 		}
