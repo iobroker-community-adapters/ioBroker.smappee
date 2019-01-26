@@ -12,7 +12,6 @@ var port;
 var host;
 var username;
 var passwort;
-adapter.log.debug("jetzt gehts los")
 var mqtt = require('mqtt');
 var servloc;
 
