@@ -18,6 +18,12 @@ Please add an instance of the ioBroker.mqtt - Adapter:
 
 ![ioBMQ](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTBroker.PNG)
 
+configure the instance as server/broker. Port 1883 as default is ok, feel free to choose any other working.
+Set username and password (you will need this for smappee- and smappee-Adapter configuration.
+
+![ioBMQ](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTConfig.PNG)
+
+
 
 ## Changelog
 
