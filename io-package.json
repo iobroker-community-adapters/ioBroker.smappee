@@ -66,9 +66,9 @@
 			"_id": "info.connection",
 			"type": "state",
 			"common": {
-				"name": "smappeeconnected",
+				"name": "smappee connected",
 				"type": "boolean",
-				"role": "info.connected",
+				"role": "indicator.connected",
 				"read": true,
 				"write": false,
 				"def": false,
