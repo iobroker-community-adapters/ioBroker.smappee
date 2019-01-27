@@ -28,7 +28,8 @@
 		"url": "https://github.com/forelleblau/ioBroker.smappee"
 	},
 	"dependencies": {
-		"request": "^2.87.0"
+		"request": "^2.87.0",
+		"mqtt": "^2.18.8"
 	},
 	"devDependencies": {
 		"gulp": "^3.9.1",
