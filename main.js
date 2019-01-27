@@ -152,7 +152,7 @@ function main() {
                         });
                         break;
                       case "realtime":
-                        adapter.setState('Servicelocation' + messageJ.serviceLocationId +'.power.totalPower', message.activePower, true);
+                        adapter.setState('Servicelocation' + messageJ.serviceLocationId +'.power.totalPower', messageJ.totalPower, true);
                         break;
 			             		}
 
