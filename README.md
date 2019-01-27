@@ -59,7 +59,7 @@ Please give the adapter some minutes to read the data from your smappy device.
 
 ### 0.0.1 Development version
 
-- in development
+- inital version, displays realtime power und aggregated energy consumption.
 
 
 ## License

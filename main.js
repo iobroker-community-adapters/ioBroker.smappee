@@ -95,7 +95,7 @@ function main() {
 	         switch(topicarray[2]) {
              case "config":
 			          adapter.log.debug("servlocid= " + messageJ.serviceLocationId);
-                adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId, {
+                adapter.setObjectNotExists('Servicelocations.' + topicarray[1], {
                   type: 'device',
                   role: '',
                   common: {
@@ -103,7 +103,7 @@ function main() {
                   },
                   native: {}
 		              });
-                  adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId +'.power', {
+                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] +'.power', {
                     type: 'channel',
                     role: '',
                     common: {
@@ -111,7 +111,7 @@ function main() {
                     },
                     native: {}
                   });
-                  adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId +'.power.totalPower', {
+                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] +'.power.totalPower', {
                       type: 'state',
                 			common: {
                 				name: 'PAC',
@@ -124,7 +124,7 @@ function main() {
                 			},
                 			native: {}
                 		});
-                    adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId +'.power.importEnergy', {
+                    adapter.setObjectNotExists('Servicelocations.' + topicarray[1] +'.power.importEnergy', {
                         type: 'state',
                         common: {
                           name: 'consumption',
@@ -137,7 +137,7 @@ function main() {
                         },
                         native: {}
                       });
-                      adapter.setObjectNotExists('Servicelocation' + messageJ.serviceLocationId +'.power.exportEnergy', {
+                      adapter.setObjectNotExists('Servicelocations.' + topicarray[1] +'.power.exportEnergy', {
                           type: 'state',
                           common: {
                             name: 'producion',
@@ -152,7 +152,7 @@ function main() {
                         });
                         break;
                       case "realtime":
-                        adapter.setState('Servicelocation' + messageJ.serviceLocationId +'.power.totalPower', messageJ.totalPower, true);
+                        adapter.setState('Servicelocations.' + topicarray[1] +'.power.totalPower', messageJ.totalPower, true);
                         break;
 			             		}
 
