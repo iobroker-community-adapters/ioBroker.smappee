@@ -4,8 +4,8 @@
 		"version": "0.0.1",
 		"news": {
 			"0.0.1": {
-				"en": "initial adapter, displays realtime power und aggregated energy consumption.",
-				"de": "Initiale Version, zeigt aktuelle Leistung in Echzeit und Verbrauch aggregiert."
+				"en": "initial adapter, displays realtime (1s) power and energy consumption.",
+				"de": "Initiale Version, zeigt aktuelle Leistung und Verbrauch in Echzeit(1s)."
 			}
 		},
 		"title": "smappee",

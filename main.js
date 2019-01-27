@@ -153,6 +153,12 @@ function main() {
                         break;
                       case "realtime":
                         adapter.setState('Servicelocations.' + topicarray[1] +'.power.totalPower', messageJ.totalPower, true);
+                        if(messageJ.totalImportEnergy>0){
+                        adapter.setState('Servicelocations.' + topicarray[1] +'.power.importEnergy', (messageJ.totalImportEnergy/3600), true);
+                        } else{adapter.setState('Servicelocations.' + topicarray[1] +'.power.importEnergy', 0, true);}
+                        if(messageJ.totalExportEnergy>0){
+                        adapter.setState('Servicelocations.' + topicarray[1] +'.power.exportEnergy', (messageJ.totalExportEnergy/3600), true);
+                      } else{adapter.setState('Servicelocations.' + topicarray[1] +'.power.exportEnergy', 0, true);}
                         break;
 			             		}
 
