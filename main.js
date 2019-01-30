@@ -115,7 +115,7 @@ function getsmappeconfig() {
   client.on('connect', function() {
     adapter.log.info("MQTT connected");
     client.subscribe('servicelocation/#');
-    client.on('message', function(topic, message, ) {
+    client.on('message', function(topic, message) {
 
       try {
         var messageJ = JSON.parse(message);
