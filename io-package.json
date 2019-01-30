@@ -1,8 +1,12 @@
 {
 	"common": {
 		"name": "smappee",
-		"version": "0.0.1",
+		"version": "0.0.2",
 		"news": {
+			"0.0.1": {
+				"en": "reads phase config, reports single phase data",
+				"de": "Liest Phasenkonfiguration, zeigt Daten zu einzelnen Phasen."
+			},
 			"0.0.1": {
 				"en": "initial adapter, displays realtime (1s) power and energy consumption.",
 				"de": "Initiale Version, zeigt aktuelle Leistung und Verbrauch in Echzeit(1s)."

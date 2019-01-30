@@ -57,7 +57,10 @@ Please give the adapter some minutes to read the data from your smappy device.
 
 ## Changelog
 
-### 0.0.1 Development version
+### 0.0.2
+ - reads phase config, reports single phase data
+
+### 0.0.1 Initial version
 
 - inital version, displays realtime power und energy consumption.
 
