@@ -89,22 +89,39 @@ function main() {
   password = adapter.config.password;
 
   getsmappeconfig();
-  setTimeout(function() {
-    getsmappeedata();
-  }, 5000);
 
+  tested = setInterval(function() {
+    if (configtopics.indexOf("realtime") != -1 && configtopics.indexOf("config") != -1 && configtopics.indexOf("channelConfig") != -1) {
+      adapter.log.info("Alle Objekte angelegt");
+      client.end();
+      setTimeout(function() {
+        getsmappeedata();
+      }, 5000);
+      clearInterval(tested);
+    } else {
+      adapter.log.warn("Noch nicht alle Objekte angelegt");
+      testi++;
+      if (testi > 3) {
+        adapter.log.warn("Fehler, noch nicht alle OBjekte angelegt, starte mqtt-client neu");
+        client.end();
+        setTimeout(function() {
+          getsmappeedata();
+        }, 2000);
+        testp++;
+        if (testp > 3) {
+          clearInterval(tested);
+        }
+      }
+    }
 
-
-
-
-
+  }, 3000);
 
 } //endMain
 
 
 function getsmappeconfig() {
 
-  var client = mqtt.connect({
+  client = mqtt.connect({
     host: host,
     port: port,
     username: username,
@@ -479,21 +496,7 @@ function getsmappeconfig() {
 
   adapter.subscribeStates('*');
 
-  tested = setInterval(function() {
-    if (configtopics.indexOf("realtime") != -1 && configtopics.indexOf("config") != -1 && configtopics.indexOf("channelConfig") != -1) {
-      adapter.log.info("Alle Objekte angelegt");
-      client.end();
-      clearInterval(tested);
-    } else {
-      adapter.log.warn("Noch nicht alle Objekte angelegt");
-      testi++;
-      if (testi > 3) {
-        adapter.log.warn("Fehler, noch nicht alle OBjekte angelegt, bitte Adapter neu starten");
-        clearInterval(tested);
-      }
-    }
 
-  }, 2000);
 
 
 } // end getsmappeconfig
