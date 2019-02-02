@@ -18,9 +18,8 @@ var servloc;
 var configtopics = [];
 var configtopicsmaxlength = 8;
 var inputchannelnumber = 0;
-var testi = 0;
-var testp = 0;
-var client;
+var phasenumbersused = [];
+
 
 function startAdapter(options) {
   options = options || {};
@@ -34,8 +33,9 @@ function startAdapter(options) {
   adapter.on('unload', function(callback) {
     try {
       adapter.log.info('[END] Stopping smappee adapter...');
+
       adapter.setState('info.connection', false, true);
-      callback();
+      client.end();
     } catch (e) {
       callback();
     }
@@ -88,422 +88,6 @@ function main() {
   username = adapter.config.username;
   password = adapter.config.password;
 
-  getsmappeconfig();
-
-  tested = setInterval(function() {
-    if (configtopics.indexOf("realtime") != -1 && configtopics.indexOf("config") != -1 && configtopics.indexOf("channelConfig") != -1) {
-      adapter.log.info("Alle Objekte angelegt");
-      client.end();
-      setTimeout(function() {
-        getsmappeedata();
-      }, 5000);
-      clearInterval(tested);
-    } else {
-      adapter.log.warn("Noch nicht alle Objekte angelegt");
-      testi++;
-      if (testi > 3) {
-        adapter.log.warn("Fehler, noch nicht alle OBjekte angelegt, starte mqtt-client neu");
-        client.end();
-        setTimeout(function() {
-          getsmappeedata();
-        }, 2000);
-        testp++;
-        if (testp > 3) {
-          clearInterval(tested);
-        }
-      }
-    }
-
-  }, 3000);
-
-} //endMain
-
-
-function getsmappeconfig() {
-
-  client = mqtt.connect({
-    host: host,
-    port: port,
-    username: username,
-    password: password
-  });
-
-
-  client.on('connect', function() {
-    adapter.log.info("MQTT connected");
-    client.subscribe('servicelocation/#');
-    client.on('message', function(topic, message) {
-
-      try {
-        var messageJ = JSON.parse(message);
-        var topicarray = topic.split("/");
-        adapter.log.debug("Topic: " + topicarray[2]);
-        switch (topicarray[2]) {
-          case "config":
-            adapter.log.debug("servlocid= " + messageJ.serviceLocationId);
-            if (configtopics.indexOf("config") === -1) {
-              configtopics.push("config");
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1], {
-                type: 'device',
-                role: '',
-                common: {
-                  name: messageJ.serviceLocationId
-                },
-                native: {}
-              });
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power', {
-                type: 'channel',
-                role: '',
-                common: {
-                  name: "power"
-                },
-                native: {}
-              });
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.totalPower', {
-                type: 'state',
-                common: {
-                  name: 'PAC',
-                  desc: 'Power AC',
-                  type: 'number',
-                  role: "value.pac",
-                  read: true,
-                  write: false,
-                  unit: "W"
-                },
-                native: {}
-              });
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.voltage', {
-                type: 'state',
-                common: {
-                  name: 'UAC',
-                  desc: 'Voltage AC',
-                  type: 'number',
-                  role: "value.uac",
-                  read: true,
-                  write: false,
-                  unit: "V"
-                },
-                native: {}
-              });
-
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.DeviceUUID', {
-                type: 'state',
-                common: {
-                  name: 'DeviceUUID',
-                  desc: 'Device UUID',
-                  type: 'string',
-                  role: "info.DeviceUUID",
-                  read: true,
-                  write: false
-                },
-                native: {}
-              });
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.serialNumber', {
-                type: 'state',
-                common: {
-                  name: 'serialNumber',
-                  desc: 'Serial Number',
-                  type: 'string',
-                  role: "info.serialNumber",
-                  read: true,
-                  write: false
-                },
-                native: {}
-              });
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.ServLocUUID', {
-                type: 'state',
-                common: {
-                  name: 'ServLocUUID',
-                  desc: 'Sercice Location UUID',
-                  type: 'string',
-                  role: "info.ServLocUUID",
-                  read: true,
-                  write: false
-                },
-                native: {}
-              });
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.ServLocID', {
-                type: 'state',
-                common: {
-                  name: 'ServLocID',
-                  desc: 'Service Location ID',
-                  type: 'string',
-                  role: "info.ServLocID",
-                  read: true,
-                  write: false
-                },
-                native: {}
-              });
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.firmwareV', {
-                type: 'state',
-                common: {
-                  name: 'firmwareV',
-                  desc: 'Firmware Version',
-                  type: 'string',
-                  role: "info.firmwareV",
-                  read: true,
-                  write: false
-                },
-                native: {}
-              });
-              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.AggrPeriod', {
-                type: 'state',
-                common: {
-                  name: 'AggrPeriod',
-                  desc: 'Aggregation Period in Seconds',
-                  type: 'number',
-                  role: "value.AggrPeriod",
-                  read: true,
-                  write: false,
-                  unit: "s"
-                },
-                native: {}
-              });
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Info.DeviceUUID', messageJ.deviceUuid, true);
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Info.serialNumber', messageJ.serialNumber, true);
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Info.ServLocUUID', messageJ.serviceLocationUuid, true);
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Info.ServLocID', messageJ.serviceLocationId, true);
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Info.firmwareV', messageJ.firmwareVersion, true);
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Info.AggrPeriod', messageJ.aggregationPeriodSeconds, true);
-              adapter.log.debug("Alle config - Objekte definiert");
-              configtopics.push("config");
-
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-            }
-            break;
-
-          case "realtime":
-            if (configtopics.indexOf("realtime") === -1) {
-              if (messageJ.totalImportEnergy != 0) {
-                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.importEnergy', {
-                  type: 'state',
-                  common: {
-                    name: 'consumption',
-                    desc: 'Energy consumption',
-                    type: 'number',
-                    role: "value.consumption",
-                    read: true,
-                    write: false,
-                    unit: "kWh"
-                  },
-                  native: {}
-                });
-              }
-              if (messageJ.totalExportEnergy != 0) {
-                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', {
-                  type: 'state',
-                  common: {
-                    name: 'producion',
-                    desc: 'Energy production',
-                    type: 'number',
-                    role: "value.production",
-                    read: true,
-                    write: false,
-                    unit: "kWh"
-                  },
-                  native: {}
-                });
-              }
-              for (var cleng = 0; cleng < messageJ.channelPowers.length; cleng++) {
-                if (messageJ.channelPowers[cleng].exportEnergy != 0) {
-                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[cleng].ctInput + ".phaseExportEnergy", {
-                    type: 'state',
-                    common: {
-                      name: 'PhaseProducion',
-                      desc: 'Energy production on Phase',
-                      type: 'number',
-                      role: "value.production",
-                      read: true,
-                      write: false,
-                      unit: "kWh"
-                    },
-                    native: {}
-                  });
-                }
-                if (messageJ.channelPowers[cleng].importEnergy != 0) {
-                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[cleng].ctInput + ".phaseImportEnergy", {
-                    type: 'state',
-                    common: {
-                      name: 'Phase consumption',
-                      desc: 'Energy consumption on Phase',
-                      type: 'number',
-                      role: "value.production",
-                      read: true,
-                      write: false,
-                      unit: "kWh"
-                    },
-                    native: {}
-                  });
-                }
-                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[cleng].ctInput + ".phaseId", {
-                  type: 'state',
-                  common: {
-                    name: 'phaseId',
-                    desc: 'Phase ID',
-                    type: 'number',
-                    role: "info.phaseId",
-                    read: true,
-                    write: false
-                  },
-                  native: {}
-                });
-              }
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-              configtopics.push("realtime");
-            }
-            break;
-
-          case "channelConfig":
-            if (configtopics.indexOf("channelConfig") === -1) {
-              for (var ileng = 0; ileng < messageJ.inputChannels.length; ileng++) {
-                adapter.log.debug("Anzahl Channels: " + messageJ.inputChannels.length);
-                if (messageJ.inputChannels[ileng].inputChannelType != "UNUSED") {
-                  adapter.log.debug("CT-Input " + messageJ.inputChannels[ileng].ctInput + " USED");
-                  inputchannelnumber++;
-                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".name", {
-                    type: 'state',
-                    common: {
-                      name: 'ctInputName',
-                      desc: 'Phase description of used CT',
-                      type: 'string',
-                      role: "info.phasename",
-                      read: true,
-                      write: false
-                    },
-                    native: {}
-                  });
-                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".inputChannelType", {
-                    type: 'state',
-                    common: {
-                      name: 'inputChannelType',
-                      desc: 'Type of input channel',
-                      type: 'string',
-                      role: "info.inputChannelType",
-                      read: true,
-                      write: false
-                    },
-                    native: {}
-                  });
-                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".inputChannelConnection", {
-                    type: 'state',
-                    common: {
-                      name: 'inputChannelConnection',
-                      desc: 'System that input channel is connected to',
-                      type: 'string',
-                      role: "info.inputChannelConnection",
-                      read: true,
-                      write: false
-                    },
-                    native: {}
-                  });
-                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".phasePower", {
-                    type: 'state',
-                    common: {
-                      name: 'phasePower',
-                      desc: 'PAC on phase',
-                      type: 'number',
-                      role: "value.phasePower",
-                      read: true,
-                      write: false,
-                      unit: "W"
-                    },
-                    native: {}
-                  });
-
-
-                }
-              }
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-              configtopics.push("channelConfig");
-            }
-            break;
-          case "sensorConfig":
-            if (configtopics.indexOf("sensorConfig") === -1) {
-              configtopics.push("sensorConfig");
-              adapter.log.debug("Topic sensorConfig to be developed");
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-            }
-            break;
-
-          case "homeControlConfig":
-            if (configtopics.indexOf("homeControlConfig") === -1) {
-              configtopics.push("homeControlConfig");
-              adapter.log.debug("Topic homeControlConfig to be developed");
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-            }
-            break;
-
-          case "aggregated":
-            if (configtopics.indexOf("aggregated") === -1) {
-              configtopics.push("aggregated");
-              adapter.log.debug("Topic aggregated to be developed");
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-            }
-            break;
-
-          case "gregatedGW":
-            if (configtopics.indexOf("gregatedGW") === -1) {
-              configtopics.push("gregatedGW");
-              adapter.log.debug("Topic gregatedGW to be developed");
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-            }
-
-            break;
-
-          case "plugsNetwork":
-            if (configtopics.indexOf("plugsNetwork") === -1) {
-              configtopics.push("plugsNetwork");
-              adapter.log.debug("Topic plugsNetwork to be developed");
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-            }
-
-            break;
-
-          case "presence":
-            if (configtopics.indexOf("presence") === -1) {
-              configtopics.push("presence");
-              adapter.log.debug("Topic presence to be developed");
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-            }
-
-            break;
-
-          case "scheduler":
-            if (configtopics.indexOf("scheduler") === -1) {
-              configtopics.push("scheduler");
-              adapter.log.debug("Topic scheduler to be developed");
-              adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-            }
-
-            break;
-        }
-
-      } catch (e) {
-        adapter.log.warn("Objektsetup - JSON-parse-Fehler Message: " + e.message);
-      };
-
-    });
-  });
-
-  adapter.subscribeStates('*');
-
-
-
-
-} // end getsmappeconfig
-
-
-function getsmappeedata() {
-  adapter.log.debug("Starte Datenimport");
   var client = mqtt.connect({
     host: host,
     port: port,
@@ -520,37 +104,253 @@ function getsmappeedata() {
         var messageJ = JSON.parse(message);
         var topicarray = topic.split("/");
         adapter.log.debug("Topic: " + topicarray[2]);
+
         switch (topicarray[2]) {
           case "realtime":
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.totalPower', messageJ.totalPower, true);
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.voltage', messageJ.voltages[0].voltage, true);
-            adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.importEnergy', function(err, obj) {
+
+            adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.totalPower', function(err, obj) {
               if (obj) {
-                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.importEnergy', 0.001 * Math.round(messageJ.totalImportEnergy / 3600), true);
-                for (var i = 0; i < inputchannelnumber; i++) {
-                  adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseImportEnergy", 0.001 * Math.round(messageJ.channelPowers[i].importEnergy / 3600), true);
-                }
+                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.totalPower', messageJ.totalPower, true);
               } else {
-                adapter.log.debug("Fehler: " + err);
+                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.totalPower', {
+                  type: 'state',
+                  common: {
+                    name: 'PAC',
+                    desc: 'Power AC',
+                    type: 'number',
+                    role: "value.pac",
+                    read: true,
+                    write: false,
+                    unit: "W"
+                  },
+                  native: {}
+                });
               }
             });
-            adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', function(err, obj) {
+
+            adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.voltage', function(err, obj) {
               if (obj) {
-                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.ExportEnergy', 0.001 * Math.round(messageJ.totalExportEnergy / 3600), true);
-                for (var i = 0; i < inputchannelnumber; i++) {
-                  adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", 0.001 * Math.round(messageJ.channelPowers[i].exportEnergy / 3600), true);
-                }
+                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.voltage', messageJ.voltages[0].voltage, true);
+
               } else {
-                adapter.log.debug("Fehler: " + err);
+                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.voltage', {
+                  type: 'state',
+                  common: {
+                    name: 'UAC',
+                    desc: 'Voltage AC',
+                    type: 'number',
+                    role: "value.uac",
+                    read: true,
+                    write: false,
+                    unit: "V"
+                  },
+                  native: {}
+                });
               }
             });
-            for (var i = 0; i < inputchannelnumber; i++) {
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phasePower", messageJ.channelPowers[i].power, true);
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseId", messageJ.channelPowers[i].phaseId, true);
+
+            if (messageJ.totalExportEnergy != 0) {
+              adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', function(err, obj) {
+                if (obj) {
+                  adapter.setState('Servicelocations.' + topicarray[1] + '.Power.ExportEnergy', 0.001 * Math.round(messageJ.totalExportEnergy / 3600), true);
+                } else {
+                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', {
+                    type: 'state',
+                    common: {
+                      name: 'producion',
+                      desc: 'Energy production',
+                      type: 'number',
+                      role: "value.production",
+                      read: true,
+                      write: false,
+                      unit: "kWh"
+                    },
+                    native: {}
+                  });
+                }
+              });
+
+              for (var i = 0; i < messageJ.channelPowers.length; i++) {
+
+                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", {
+                  type: 'state',
+                  common: {
+                    name: 'PhaseProducion',
+                    desc: 'Energy production on Phase',
+                    type: 'number',
+                    role: "value.production",
+                    read: true,
+                    write: false,
+                    unit: "kWh"
+                  },
+                  native: {}
+                });
+                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", 0.001 * Math.round(messageJ.channelPowers[i].exportEnergy / 3600), true);
+
+              }
+            }
+
+
+
+            if (messageJ.totalImportEnergy != 0) {
+              adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.importEnergy', function(err, obj) {
+                if (obj) {
+                  adapter.setState('Servicelocations.' + topicarray[1] + '.Power.importEnergy', 0.001 * Math.round(messageJ.totalImportEnergy / 3600), true);
+
+                } else {
+                  adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.importEnergy', {
+                    type: 'state',
+                    common: {
+                      name: 'consumption',
+                      desc: 'Energy consumption',
+                      type: 'number',
+                      role: "value.consumption",
+                      read: true,
+                      write: false,
+                      unit: "kWh"
+                    },
+                    native: {}
+                  });
+
+                }
+              });
+
+
+              for (var i = 0; i < inputchannelnumber; i++) {
+                adapter.log.debug("Import Energy, Bearbeite Phase Nr. :" + i);
+
+
+                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].phaseId + ".phaseImportEnergy", {
+                  type: 'state',
+                  common: {
+                    name: 'phaseImportEnergy',
+                    desc: 'Energy consumption on Phase',
+                    type: 'number',
+                    role: "value.production",
+                    read: true,
+                    write: false,
+                    unit: "kWh"
+                  },
+                  native: {}
+                });
+
+                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].phaseId + ".phaseImportEnergy", 0.001 * Math.round(messageJ.channelPowers[i].importEnergy / 3600), true);
+                adapter.log.debug(" Wert Phase" + messageJ.channelPowers[i].phaseId + ": " + 0.001 * Math.round(messageJ.channelPowers[i].importEnergy / 3600));
+
+              }
+            }
+
+
+            for (var phasecount = 0; phasecount < messageJ.channelPowers.length; phasecount++) {
+              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + phasecount + ".phasePower", {
+                type: 'state',
+                common: {
+                  name: 'phasePower',
+                  desc: 'PAC on phase',
+                  type: 'number',
+                  role: "value.phasePower",
+                  read: true,
+                  write: false,
+                  unit: "W"
+                },
+                native: {}
+              });
+              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + phasecount + ".phasePower", messageJ.channelPowers[phasecount].power, true);
+
+
+              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + phasecount + ".phaseId", {
+                type: 'state',
+                common: {
+                  name: 'phaseId',
+                  desc: 'Phase ID',
+                  type: 'number',
+                  role: "info.phaseId",
+                  read: true,
+                  write: false
+                },
+                native: {}
+              });
+
+              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + phasecount + ".phaseId", messageJ.channelPowers[phasecount].phaseId, true);
+
             }
             break;
 
+
           case "config":
+            adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.DeviceUUID', {
+              type: 'state',
+              common: {
+                name: 'DeviceUUID',
+                desc: 'Device UUID',
+                type: 'string',
+                role: "info.DeviceUUID",
+                read: true,
+                write: false
+              },
+              native: {}
+            });
+            adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.serialNumber', {
+              type: 'state',
+              common: {
+                name: 'serialNumber',
+                desc: 'Serial Number',
+                type: 'string',
+                role: "info.serialNumber",
+                read: true,
+                write: false
+              },
+              native: {}
+            });
+            adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.ServLocUUID', {
+              type: 'state',
+              common: {
+                name: 'ServLocUUID',
+                desc: 'Sercice Location UUID',
+                type: 'string',
+                role: "info.ServLocUUID",
+                read: true,
+                write: false
+              },
+              native: {}
+            });
+            adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.ServLocID', {
+              type: 'state',
+              common: {
+                name: 'ServLocID',
+                desc: 'Service Location ID',
+                type: 'string',
+                role: "info.ServLocID",
+                read: true,
+                write: false
+              },
+              native: {}
+            });
+            adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.firmwareV', {
+              type: 'state',
+              common: {
+                name: 'firmwareV',
+                desc: 'Firmware Version',
+                type: 'string',
+                role: "info.firmwareV",
+                read: true,
+                write: false
+              },
+              native: {}
+            });
+            adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Info.AggrPeriod', {
+              type: 'state',
+              common: {
+                name: 'AggrPeriod',
+                desc: 'Aggregation Period in Seconds',
+                type: 'number',
+                role: "value.AggrPeriod",
+                read: true,
+                write: false,
+                unit: "s"
+              },
+              native: {}
+            });
             adapter.setState('Servicelocations.' + topicarray[1] + '.Info.DeviceUUID', messageJ.deviceUuid, true);
             adapter.setState('Servicelocations.' + topicarray[1] + '.Info.serialNumber', messageJ.serialNumber, true);
             adapter.setState('Servicelocations.' + topicarray[1] + '.Info.ServLocUUID', messageJ.serviceLocationUuid, true);
@@ -560,27 +360,61 @@ function getsmappeedata() {
             break;
 
           case "channelConfig":
-            for (var i = 0; i < inputchannelnumber; i++) {
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[i].ctInput + ".name", messageJ.inputChannels[i].name, true);
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[i].ctInput + ".inputChannelType", messageJ.inputChannels[i].inputChannelType, true);
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[i].ctInput + ".inputChannelConnection", messageJ.inputChannels[i].inputChannelConnection, true);
+            for (var ileng = 0; ileng < messageJ.inputChannels.length; ileng++) {
+              adapter.log.debug("Anzahl Channels: " + messageJ.inputChannels.length);
+              if (messageJ.inputChannels[ileng].inputChannelType != "UNUSED") {
+                adapter.log.debug("CT-Input " + messageJ.inputChannels[ileng].ctInput + " USED");
+                phasenumbersused.push[messageJ.inputChannels[ileng].ctInput];
+                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".name", {
+                  type: 'state',
+                  common: {
+                    name: 'ctInputName',
+                    desc: 'Phase description of used CT',
+                    type: 'string',
+                    role: "info.phasename",
+                    read: true,
+                    write: false
+                  },
+                  native: {}
+                });
+                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".inputChannelType", {
+                  type: 'state',
+                  common: {
+                    name: 'inputChannelType',
+                    desc: 'Type of input channel',
+                    type: 'string',
+                    role: "info.inputChannelType",
+                    read: true,
+                    write: false
+                  },
+                  native: {}
+                });
+                adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".inputChannelConnection", {
+                  type: 'state',
+                  common: {
+                    name: 'inputChannelConnection',
+                    desc: 'System that input channel is connected to',
+                    type: 'string',
+                    role: "info.inputChannelConnection",
+                    read: true,
+                    write: false
+                  },
+                  native: {}
+                });
+                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".name", messageJ.inputChannels[ileng].name, true);
+                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".inputChannelType", messageJ.inputChannels[ileng].inputChannelType, true);
+                adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.inputChannels[ileng].ctInput + ".inputChannelConnection", messageJ.inputChannels[ileng].inputChannelConnection, true);
+              }
             }
             break;
-
-
-
         }
-
 
       } catch (e) {
         adapter.log.warn("Datenimport - JSON-parse-Fehler Message: " + e.message);
       };
-
     });
   });
-
-
-} //end getsmappeedata
+} //endMain
 
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {
