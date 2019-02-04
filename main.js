@@ -73,8 +73,11 @@ function startAdapter(options) {
 
   // is called when databases are connected and adapter received configuration.
   adapter.on('ready', function() {
+  if (adapter.config.mqttusername) {
+adapter.log.info('[START] Starting smappee adapter');
     adapter.setState('info.connection', true, true);
     main();
+} else {adapter.log.warn('[START] MQTT usr/pwd not set yet')}
   });
 
   return adapter;
