@@ -1,9 +1,13 @@
 {
 	"common": {
 		"name": "smappee",
-		"version": "0.0.2",
+		"version": "0.0.3",
 		"news": {
-			"0.0.1": {
+			"0.0.3": {
+				"en": "first tested version, config - bug fixed",
+				"de": "Erste getestete Version, Fehler im Config-Dialog behoben."
+			},
+			"0.0.2": {
 				"en": "reads phase config, reports single phase data",
 				"de": "Liest Phasenkonfiguration, zeigt Daten zu einzelnen Phasen."
 			},
@@ -48,10 +52,10 @@
 		"messagebox": false
 	},
 	"native": {
-		"host": "localhost",
-		"port":1883,
-		"username":"",
-		"password":""
+		"mqtthost": "localhost",
+		"mqttport":1883,
+		"mqttusername":"",
+		"mqttpassword":""
 	},
 
 	"objects": [],

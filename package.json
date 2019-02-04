@@ -1,6 +1,6 @@
 {
 	"name": "iobroker.smappee",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"engines": {
     	"node": ">=6.0.0"
 	},
@@ -28,7 +28,6 @@
 		"url": "https://github.com/forelleblau/ioBroker.smappee"
 	},
 	"dependencies": {
-		"request": "^2.87.0",
 		"mqtt": "^2.18.8"
 	},
 	"devDependencies": {

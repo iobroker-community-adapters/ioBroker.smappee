@@ -83,10 +83,10 @@ function startAdapter(options) {
 
 function main() {
 
-  host = adapter.config.host;
-  port = adapter.config.port;
-  username = adapter.config.username;
-  password = adapter.config.password;
+  host = adapter.config.mqtthost;
+  port = adapter.config.mqttport;
+  username = adapter.config.mqttusername;
+  password = adapter.config.mqttpassword;
 
   var client = mqtt.connect({
     host: host,
@@ -216,7 +216,7 @@ function main() {
               });
 
 
-              for (var i = 0; i < inputchannelnumber; i++) {
+              for (var i = 0; i < messageJ.channelPowers.length; i++) {
                 adapter.log.debug("Import Energy, Bearbeite Phase Nr. :" + i);
 
 
