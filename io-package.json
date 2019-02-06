@@ -1,8 +1,12 @@
 {
 	"common": {
 		"name": "smappee",
-		"version": "0.0.3",
+		"version": "0.0.4",
 		"news": {
+			"0.0.4": {
+				"en": "credentials - bug fixed, more efficient design, gulp update",
+				"de": "Usr/PW - Fehler behoben, effizienteres design, gulp update"
+			},
 			"0.0.3": {
 				"en": "first tested version, config - bug fixed",
 				"de": "Erste getestete Version, Fehler im Config-Dialog behoben."
