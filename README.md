@@ -56,8 +56,10 @@ Please give the adapter some minutes to read the data from your smappy device.
 
 
 ## Changelog
+### 0.0.5
+  - design-bug fixed, Gas_Water Sensor integrated (only raw value).
 ### 0.0.4
-  - credentials - bug fixed, more efficient design.
+  - credentials - bug fixed, more efficient design, gulp update
 
 ### 0.0.3
  - first tested version, bugs in config fixed.

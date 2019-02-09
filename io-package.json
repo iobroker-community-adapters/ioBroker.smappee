@@ -1,8 +1,12 @@
 {
 	"common": {
 		"name": "smappee",
-		"version": "0.0.4",
+		"version": "0.0.5",
 		"news": {
+			"0.0.5": {
+				"en": "design-bug fixed, Gas_Water Sensor integrated (only raw value).",
+				"de": "Ablauf - Fehler behoben, Gas_Wasser Sensor integriert (nur Rohwert)"
+			},
 			"0.0.4": {
 				"en": "credentials - bug fixed, more efficient design, gulp update",
 				"de": "Usr/PW - Fehler behoben, effizienteres design, gulp update"
