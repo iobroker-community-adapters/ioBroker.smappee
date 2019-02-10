@@ -55,7 +55,7 @@ Please give the adapter some minutes to read the data from your smappee device.
 
 ### Data aggregation or separaion (hourly, daily, yearly,.. values)
 
-Some of smappee's values are 'couters', some are values for a certain period.
+Some of smappee's values are 'counters', some are values for a certain period.
 For aggregation or separation of data, please use the ioBroker.statistics adapter.
 
 
@@ -63,7 +63,7 @@ For aggregation or separation of data, please use the ioBroker.statistics adapte
 
 ## Changelog
 ### 0.1.0
-  - Gas_Water sensor integrated, 'alwaysOn' integrated. 
+  - Gas_Water sensor integrated, 'alwaysOn' integrated.
 ### 0.0.5
   - design-bug fixed, Gas_Water Sensor integrated (only raw value).
 ### 0.0.4
