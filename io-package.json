@@ -1,8 +1,12 @@
 {
 	"common": {
 		"name": "smappee",
-		"version": "0.0.5",
+		"version": "0.1.0",
 		"news": {
+			"0.1.1": {
+				"en": "Gas_Water Sensor integrated, 'alwaysOn' integrated.",
+				"de": "Gas_Wasser Sensor und Dauerverbrauch integriert."
+			},
 			"0.0.5": {
 				"en": "design-bug fixed, Gas_Water Sensor integrated (only raw value).",
 				"de": "Ablauf - Fehler behoben, Gas_Wasser Sensor integriert (nur Rohwert)"

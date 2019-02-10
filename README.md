@@ -51,11 +51,19 @@ Create an instance of the smappee-adapter and enter username & password you spec
 
 If you use other than ioBrokers MQTT-Adapter with default settings, you can optionally specifiy the connection to your MQTT Broker (host & port).
 
-Please give the adapter some minutes to read the data from your smappy device.
+Please give the adapter some minutes to read the data from your smappee device.
+
+### Data aggregation or separaion (hourly, daily, yearly,.. values)
+
+Some of smappee's values are 'couters', some are values for a certain period.
+For aggregation or separation of data, please use the ioBroker.statistics adapter.
+
 
 
 
 ## Changelog
+### 0.1.0
+  - Gas_Water sensor integrated, 'alwaysOn' integrated. 
 ### 0.0.5
   - design-bug fixed, Gas_Water Sensor integrated (only raw value).
 ### 0.0.4
