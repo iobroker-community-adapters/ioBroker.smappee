@@ -1,4 +1,5 @@
 ![Logo](admin/smappee.png)
+
 # ioBroker.smappee
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.smappee.svg)](https://www.npmjs.com/package/iobroker.smappee)
@@ -13,7 +14,9 @@ An ioBroker adapter for smappee - devices
 This adapter brings you realtime (1s-interval) energy  power data, aggregated data for energy and optional sensor consumption data and access to your switches/plugs of your Smappee - Device to ioBroker.
 
 ## Instructions
+
 ### Installing ioBroker.mqtt - Adapter.
+
 Please add an instance of the ioBroker.mqtt - Adapter:
 
 ![ioBMQ](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTBroker.PNG)
@@ -25,7 +28,7 @@ Set username and password (you will need this for smappee- and smappee-Adapter c
 
 ### Activation of Smappee's MQTT publishing.
 
-Open your browser and avigate to the URL: http://X.X.X.X/smappee.html (replace X.X.X.X by Smappee's IP address in your network).
+Open your browser and avigate to the URL: <http://X.X.X.X/smappee.html> (replace X.X.X.X by Smappee's IP address in your network).
 Click the logon/logoff button and use the password "admin" to Logon.
 
 ![smplogon](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/smplogon.png)
@@ -58,29 +61,42 @@ Please give the adapter some minutes to read the data from your smappee device.
 Some of smappee's values are 'counters', some are values for a certain period.
 For aggregation or separation of data, please use the ioBroker.statistics adapter.
 
+### Control plugs
 
-
+Smappee allows you to remotly control smart plugs. Either smappee-ones or other 433Mhz RF-plugs/swiches (i.e. Intertechno IT-1500). Pair the switches with your smappee - app and restart the ioBroker smappee-adapter. You will get the names and states of your plugs and by setting 'switchON' 'true', you turn the switch on, when you set it 'false', you turn it off.
 
 ## Changelog
+
+### 0.1.1
+
+-   Imports names & states of switches/plugs. Lets you control your swiches.
+
 ### 0.1.0
-  - Gas_Water sensor integrated, 'alwaysOn' integrated.
+
+-   Gas_Water sensor integrated, 'alwaysOn' integrated.
+
 ### 0.0.5
-  - design-bug fixed, Gas_Water Sensor integrated (only raw value).
+
+-   design-bug fixed, Gas_Water Sensor integrated (only raw value).
+
 ### 0.0.4
-  - credentials - bug fixed, more efficient design, gulp update
+
+-   credentials - bug fixed, more efficient design, gulp update
 
 ### 0.0.3
- - first tested version, bugs in config fixed.
+
+-   first tested version, bugs in config fixed.
 
 ### 0.0.2
- - reads phase config, reports single phase data.
+
+-   reads phase config, reports single phase data.
 
 ### 0.0.1 Initial version
 
-- inital version, displays realtime power und energy consumption.
-
+-   inital version, displays realtime power und energy consumption.
 
 ## License
+
 The MIT License (MIT)
 
 Copyright (c) 2018 forelleblau marceladam@gmx.ch

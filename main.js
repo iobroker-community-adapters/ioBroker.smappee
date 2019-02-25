@@ -10,6 +10,7 @@ const utils = require(__dirname + '/lib/utils'); // Get common adapter utils
 let adapter;
 var port;
 var host;
+var client;
 var username;
 var password;
 var tested;
@@ -19,6 +20,8 @@ var configtopics = [];
 var inputchannels = [];
 var gwSensorChannelsConfigArr = [];
 var gwCounterState;
+var plugnumber;
+var plugcounter = 0;
 
 
 function startAdapter(options) {
@@ -50,13 +53,39 @@ function startAdapter(options) {
   // is called if a subscribed state changes
   adapter.on('stateChange', function(id, state) {
     // Warning, state can be null if it was deleted
-    adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
 
-    // you can use the ack flag to detect if it is status (true) or command (false)
-    if (state && !state.ack) {
-      adapter.log.info('ack is not set!');
+    try {
+      adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
+
+      if (!id || state.ack) return; // Ignore acknowledged state changes or error states
+      id = id.substring(adapter.namespace.length + 1); // remove instance name and id
+      state = state.val;
+      adapter.log.debug("id=" + id);
+      var idarray = id.split('.');
+      adapter.log.debug("idarray: " + idarray);
+      if (idarray[4] == "switchON") {
+        var topicout = 'servicelocation/' + idarray[1] + '/' + idarray[2] + '/' + idarray[3] + "/setstate";
+        if (state == true) {
+          var payload = '{"value":"ON", "since":' + new Date().getTime() + '}';
+        } else {
+          var payload = '{"value":"OFF", "since":' + new Date().getTime() + '}';
+        }
+        adapter.log.debug("Topic: " + topicout + "Message: " + payload);
+        client.publish(topicout, payload);
+      }
+
+      // you can use the ack flag to detect if it is status (true) or command (false)
+      if (state && !state.ack) {
+        adapter.log.info('ack is not set!');
+      }
+    } catch (e) {
+      adapter.log.debug("Fehler Befehlsauswertung: " + e);
     }
   });
+
+  // you can use the ack flag to detect if it is status (true) or command (false)
+
+
 
   // Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
   adapter.on('message', function(obj) {
@@ -90,7 +119,7 @@ function main() {
   username = adapter.config.mqttusername;
   password = adapter.config.mqttpassword;
 
-  var client = mqtt.connect({
+  client = mqtt.connect({
     host: host,
     port: port,
     username: username,
@@ -519,9 +548,62 @@ function getsmappeeconfig(topicarray, messageJ) {
         break;
 
       case "homeControlConfig":
-
+        plugnumber = messageJ.smartplugActuators.length;
+        for (var i = 0; i < messageJ.smartplugActuators.length; i++) {
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".state", {
+            type: 'state',
+            common: {
+              name: 'reported state',
+              desc: 'State smart plug',
+              type: 'string',
+              role: "info.state",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".statesince", {
+            type: 'state',
+            common: {
+              name: 'state since',
+              desc: 'State smart plug swiched state since',
+              type: 'string',
+              role: "info.state",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".name", {
+            type: 'state',
+            common: {
+              name: 'plugs name',
+              desc: 'Name of smart plug',
+              type: 'string',
+              role: "info.name",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".switchON", {
+            type: 'state',
+            common: {
+              name: 'control with ON_true OFF_false',
+              desc: 'control state of  smart plug',
+              type: 'boolean',
+              role: "control.state",
+              read: true,
+              write: true
+            },
+            native: {}
+          });
+        }
+        for (var i = 0; i < messageJ.smartplugActuators.length; i++) {
+          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".name", messageJ.smartplugActuators[i].name, true);
+        }
+        adapter.log.debug("Alle homeControlConfig - Objekte definiert");
         configtopics.push("homeControlConfig");
-        adapter.log.debug("Topic homeControlConfig to be developed");
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
 
         break;
@@ -530,7 +612,6 @@ function getsmappeeconfig(topicarray, messageJ) {
         configtopics.push("aggregated");
         adapter.log.debug("Topic aggregated to be developed");
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
 
         break;
 
@@ -558,6 +639,44 @@ function getsmappeeconfig(topicarray, messageJ) {
       case "scheduler":
         configtopics.push("scheduler");
         adapter.log.debug("Topic scheduler to be developed");
+        adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
+
+        break;
+
+      case "plug":
+        plugcounter++;
+        adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", {
+          type: 'state',
+          common: {
+            name: 'reported state',
+            desc: 'State smart plug',
+            type: 'string',
+            role: "info.state",
+            read: true,
+            write: false
+          },
+          native: {}
+        });
+        adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", {
+          type: 'state',
+          common: {
+            name: 'state since',
+            desc: 'State smart plug swiched state since',
+            type: 'string',
+            role: "info.state",
+            read: true,
+            write: false
+          },
+          native: {}
+        });
+        var s = new Date(messageJ.since);
+        adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true)
+        adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true)
+
+        if (plugcounter == plugnumber) {
+          configtopics.push("plug");
+        }
+
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
 
         break;
@@ -655,6 +774,13 @@ function getsmappeedata(topicarray, messageJ) {
         adapter.setState('Servicelocations.' + topicarray[1] + '.Power.alwaysOn', (messageJ.intervalDatas[0].alwaysOn) / 1000, true);
 
         break;
+
+      case "plug":
+        var s = new Date(messageJ.since);
+        adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true);
+        adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true);
+        break;
+
     }
 
   } catch (e) {

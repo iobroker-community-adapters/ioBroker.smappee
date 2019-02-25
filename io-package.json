@@ -1,9 +1,13 @@
 {
 	"common": {
 		"name": "smappee",
-		"version": "0.1.0",
+		"version": "0.1.1",
 		"news": {
 			"0.1.1": {
+				"en": "Imports names & states of switches/plugs. Lets you control your swiches.",
+				"de": "Importiert Namen und Stati von Steckdosen-Schaltern, ermöglicht das Schalten der Steckdosen-Schalter"
+			},
+			"0.1.0": {
 				"en": "Gas_Water Sensor integrated, 'alwaysOn' integrated.",
 				"de": "Gas_Wasser Sensor und Dauerverbrauch integriert."
 			},
