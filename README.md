@@ -56,6 +56,7 @@ If you use other than ioBrokers MQTT-Adapter with default settings, you can opti
 
 Please give the adapter some minutes to read the data from your smappee device.
 
+
 ### Data aggregation or separaion (hourly, daily, yearly,.. values)
 
 Some of smappee's values are 'counters', some are values for a certain period.
@@ -63,9 +64,13 @@ For aggregation or separation of data, please use the ioBroker.statistics adapte
 
 ### Control plugs
 
-Smappee allows you to remotly control smart plugs. Either smappee-ones or other 433Mhz RF-plugs/swiches (i.e. Intertechno IT-1500). Pair the switches with your smappee - app and restart the ioBroker smappee-adapter. You will get the names and states of your plugs and by setting 'switchON' 'true', you turn the switch on, when you set it 'false', you turn it off.
+Smappee allows you to remotly control smart plugs / smart switches. Either smappee-ones or other 433Mhz RF-plugs/swiches (i.e. Intertechno IT-1500). Pair the switches with your smappee - app and restart the ioBroker smappee-adapter. You will get the names and states of your plugs and by setting 'switchON' 'true', you turn the switch on, when you set it 'false', you turn it off.
 
 ## Changelog
+
+### 0.1.2
+
+- Controls smart plugs and smart switches, gets 5-min power consuption for switch sensors (smart switches). [For testing only]
 
 ### 0.1.1
 

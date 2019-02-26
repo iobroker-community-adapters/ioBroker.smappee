@@ -540,6 +540,46 @@ function getsmappeeconfig(topicarray, messageJ) {
           }
           gwSensorChannelsConfigArr[messageJ.gwSensors[i].sensorId] = JSON.stringify(messageJ.gwSensors[i].gwSensorChannelsConfig);
         }
+
+        for (var i = 0; i < messageJ.switchSensors.length; i++) {
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchSensors[i].sensorId + ".name", {
+            type: 'state',
+            common: {
+              name: 'Name',
+              desc: 'Switch Sensors name',
+              type: 'string',
+              role: "info.name",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchSensors[i].sensorId + ".SerialNumber", {
+            type: 'state',
+            common: {
+              name: 'SerialNumber',
+              desc: 'Switch Sensors serial number',
+              type: 'string',
+              role: "info.sn",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchSensors[i].sensorId + ".ActivePower5min", {
+            type: 'state',
+            common: {
+              name: 'Consumption 5min',
+              desc: 'Switch Sensors energy consumption last 5-min value',
+              type: 'number',
+              role: "info.consumption",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+        }
+
         configtopics.push("sensorConfig");
 
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
@@ -548,7 +588,7 @@ function getsmappeeconfig(topicarray, messageJ) {
         break;
 
       case "homeControlConfig":
-        plugnumber = messageJ.smartplugActuators.length;
+        plugnumber = messageJ.smartplugActuators.length + messageJ.switchActuators.length;
         for (var i = 0; i < messageJ.smartplugActuators.length; i++) {
           adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".state", {
             type: 'state',
@@ -599,8 +639,61 @@ function getsmappeeconfig(topicarray, messageJ) {
             native: {}
           });
         }
+        for (var i = 0; i < messageJ.switchActuators.length; i++) {
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.switchActuators[i].nodeId + ".state", {
+            type: 'state',
+            common: {
+              name: 'reported state',
+              desc: 'State smart plug',
+              type: 'string',
+              role: "info.state",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.switchActuators[i].nodeId + ".statesince", {
+            type: 'state',
+            common: {
+              name: 'state since',
+              desc: 'State smart plug swiched state since',
+              type: 'string',
+              role: "info.state",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.switchActuators[i].nodeId + ".name", {
+            type: 'state',
+            common: {
+              name: 'plugs name',
+              desc: 'Name of smart plug',
+              type: 'string',
+              role: "info.name",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.switchActuators[i].nodeId + ".switchON", {
+            type: 'state',
+            common: {
+              name: 'control with ON_true OFF_false',
+              desc: 'control state of  smart plug',
+              type: 'boolean',
+              role: "control.state",
+              read: true,
+              write: true
+            },
+            native: {}
+          });
+        }
         for (var i = 0; i < messageJ.smartplugActuators.length; i++) {
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".name", messageJ.smartplugActuators[i].name, true);
+        }
+        for (var i = 0; i < messageJ.switchActuators.length; i++) {
+          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.switchActuators[i].nodeId + ".name", messageJ.switchActuators[i].name, true);
         }
         adapter.log.debug("Alle homeControlConfig - Objekte definiert");
         configtopics.push("homeControlConfig");
@@ -618,13 +711,6 @@ function getsmappeeconfig(topicarray, messageJ) {
       case "aggregatedGW":
         configtopics.push("aggregatedGW");
         adapter.log.debug("Topic aggregatedGW to be developed");
-        adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
-
-        break;
-
-      case "plugsNetwork":
-        configtopics.push("plugsNetwork");
-        adapter.log.debug("Topic plugsNetwork to be developed");
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
 
         break;
@@ -747,6 +833,10 @@ function getsmappeedata(topicarray, messageJ) {
             }
           }
         }
+        for (var i = 0; i < messageJ.switchSensors.length; i++) {
+          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchSensors[i].sensorId + ".name", messageJ.switchSensors[i].name, true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchSensors[i].sensorId + ".SerialNumber", messageJ.switchSensors[i].serialNumber, true);
+        }
         break;
 
       case "aggregatedGW":
@@ -774,6 +864,11 @@ function getsmappeedata(topicarray, messageJ) {
         adapter.setState('Servicelocations.' + topicarray[1] + '.Power.alwaysOn', (messageJ.intervalDatas[0].alwaysOn) / 1000, true);
 
         break;
+      case "aggregatedSwitch":
+        for (i = 0; i < messageJ.switchIntervalDatas.length; i++) {
+          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".ActivePower5min", messageJ.switchIntervalDatas[i].activePower, true);
+        }
+        break;
 
       case "plug":
         var s = new Date(messageJ.since);
@@ -782,6 +877,7 @@ function getsmappeedata(topicarray, messageJ) {
         break;
 
     }
+
 
   } catch (e) {
     adapter.log.warn("getsmappeedata - JSON-parse-Fehler Message: " + e.message);
