@@ -710,7 +710,13 @@ function getsmappeeconfig(topicarray, messageJ) {
 
       case "aggregatedGW":
         configtopics.push("aggregatedGW");
-        adapter.log.debug("Topic aggregatedGW to be developed");
+        adapter.log.debug("Topic aggregatedGW - no config input");
+        adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
+
+        break;
+      case "aggregatedSwitch":
+        configtopics.push("aggregatedSwitch");
+        adapter.log.debug("Topic aggregatedSwitch  - no config input");
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
 
         break;
