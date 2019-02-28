@@ -67,8 +67,11 @@ function startAdapter(options) {
         var topicout = 'servicelocation/' + idarray[1] + '/' + idarray[2] + '/' + idarray[3] + "/setstate";
         if (state == true) {
           var payload = '{"value":"ON", "since":' + new Date().getTime() + '}';
+          adapter.setState('Servicelocations.' + idarray[1] + '.plug.' + idarray[3] + ".switchON", true, true);
         } else {
           var payload = '{"value":"OFF", "since":' + new Date().getTime() + '}';
+          adapter.setState('Servicelocations.' + idarray[1] + '.plug.' + idarray[3] + ".switchON", false, true);
+
         }
         adapter.log.debug("Topic: " + topicout + "Message: " + payload);
         client.publish(topicout, payload);
@@ -574,7 +577,8 @@ function getsmappeeconfig(topicarray, messageJ) {
               type: 'number',
               role: "info.consumption",
               read: true,
-              write: false
+              write: false,
+              unit: "Wh"
             },
             native: {}
           });
@@ -589,6 +593,7 @@ function getsmappeeconfig(topicarray, messageJ) {
 
       case "homeControlConfig":
         plugnumber = messageJ.smartplugActuators.length + messageJ.switchActuators.length;
+        adapter.log.debug("Plugnumber: " + plugnumber);
         for (var i = 0; i < messageJ.smartplugActuators.length; i++) {
           adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".state", {
             type: 'state',
@@ -656,7 +661,31 @@ function getsmappeeconfig(topicarray, messageJ) {
             type: 'state',
             common: {
               name: 'state since',
-              desc: 'State smart plug swiched state since',
+              desc: 'Smartswitch state swiched since',
+              type: 'string',
+              role: "info.state",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.switchActuators[i].nodeId + ".connstate", {
+            type: 'state',
+            common: {
+              name: 'reported connection state',
+              desc: 'Connection state of smart plug',
+              type: 'string',
+              role: "info.state",
+              read: true,
+              write: false
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.switchActuators[i].nodeId + ".connstatesince", {
+            type: 'state',
+            common: {
+              name: 'connection state since',
+              desc: 'connection state switch plug since',
               type: 'string',
               role: "info.state",
               read: true,
@@ -736,7 +765,8 @@ function getsmappeeconfig(topicarray, messageJ) {
         break;
 
       case "plug":
-        plugcounter++;
+        /*plugcounter++;
+        adapter.log.debug("Plugnumber: " + plugnumber + ", Plugcounter: " + plugcounter);
         adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", {
           type: 'state',
           common: {
@@ -765,9 +795,9 @@ function getsmappeeconfig(topicarray, messageJ) {
         adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true)
         adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true)
 
-        if (plugcounter == plugnumber) {
-          configtopics.push("plug");
-        }
+        if (plugcounter == plugnumber) {*/
+        configtopics.push("plug");
+        //}
 
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
 
@@ -872,14 +902,22 @@ function getsmappeedata(topicarray, messageJ) {
         break;
       case "aggregatedSwitch":
         for (i = 0; i < messageJ.switchIntervalDatas.length; i++) {
-          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".ActivePower5min", messageJ.switchIntervalDatas[i].activePower, true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".ActivePower5min", 0.001 * Math.round(messageJ.switchIntervalDatas[i].activePower / 3.6), true);
         }
         break;
 
       case "plug":
-        var s = new Date(messageJ.since);
-        adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true);
-        adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true);
+        if (topicarray[4] == "state") {
+          var s = new Date(messageJ.since);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true);
+        } else if (topicarray[4] == "connectionState") {
+          var s = new Date(messageJ.since);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".connstatesince", s.toLocaleString(), true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".connstate", messageJ.value, true);
+        }
+
+
         break;
 
     }

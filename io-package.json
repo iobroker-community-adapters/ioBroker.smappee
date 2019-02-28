@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "smappee",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "news": {
+      "0.1.3": {
+        "en": "Controls smart plugs and smart switches, gets 5-min power consuption for switch sensors (smart switches) in Wh. Small bugs eliminated [For testing only]",
+        "de": "Testversion integration smart swiches mit Messung in Wh, kleinere Fehler korrigiert"
+      },
       "0.1.2": {
         "en": "Controls smart plugs and smart switches, gets 5-min power consuption for switch sensors (smart switches). [For testing only]",
         "de": "Testversion integration smart swiches mit Messung"
