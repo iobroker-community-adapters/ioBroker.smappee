@@ -54,12 +54,13 @@ Create an instance of the smappee-adapter and enter username & password you spec
 
 If you use other than ioBrokers MQTT-Adapter with default settings, you can optionally specifiy the connection to your MQTT Broker (host & port).
 
-Please give the adapter some minutes to read the data from your smappee device.
+Please give the adapter some minutes to read the data from your smappee device. Reload the object-tree if you're missing some values.
 
+The adapter provides data on actual current, on power consumption in total and for each phase, on the actual load and on state and consumption data for gas, water and switch - sensors.
 
 ### Data aggregation or separaion (hourly, daily, yearly,.. values)
 
-Some of smappee's values are 'counters', some are values for a certain period.
+Some of smappee's values are 'counters', some are values for a certain period (5-min values).
 For aggregation or separation of data, please use the ioBroker.statistics adapter.
 
 ### Control plugs/switches
@@ -68,9 +69,13 @@ Smappee allows you to remotly control smart plugs / smart switches. Either smapp
 
 ## Changelog
 
+### 0.2.0
+
+-   Gets state data for smartplugs and smartswitches, controls smart plugs and smart switches, gets 5-min power consumption for switch sensors (smart switches).
+
 ### 0.1.3
 
-- Controls smart plugs and smart switches, gets 5-min power consuption for switch sensors (smart switches). [For testing only]
+-   Controls smart plugs and smart switches, gets 5-min power consuption for switch sensors (smart switches). [For testing only]
 
 ### 0.1.1
 

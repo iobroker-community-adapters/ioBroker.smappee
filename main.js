@@ -20,9 +20,6 @@ var configtopics = [];
 var inputchannels = [];
 var gwSensorChannelsConfigArr = [];
 var gwCounterState;
-var plugnumber;
-var plugcounter = 0;
-
 
 function startAdapter(options) {
   options = options || {};
@@ -592,8 +589,6 @@ function getsmappeeconfig(topicarray, messageJ) {
         break;
 
       case "homeControlConfig":
-        plugnumber = messageJ.smartplugActuators.length + messageJ.switchActuators.length;
-        adapter.log.debug("Plugnumber: " + plugnumber);
         for (var i = 0; i < messageJ.smartplugActuators.length; i++) {
           adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.smartplugActuators[i].nodeId + ".state", {
             type: 'state',
@@ -725,6 +720,7 @@ function getsmappeeconfig(topicarray, messageJ) {
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + messageJ.switchActuators[i].nodeId + ".name", messageJ.switchActuators[i].name, true);
         }
         adapter.log.debug("Alle homeControlConfig - Objekte definiert");
+        adapter.log.debug(messageJ.smartplugActuators.length + " Smartplugs angelegt, " + messageJ.switchActuators.length + " Smartswitches angelegt.");
         configtopics.push("homeControlConfig");
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
 
@@ -765,40 +761,8 @@ function getsmappeeconfig(topicarray, messageJ) {
         break;
 
       case "plug":
-        /*plugcounter++;
-        adapter.log.debug("Plugnumber: " + plugnumber + ", Plugcounter: " + plugcounter);
-        adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", {
-          type: 'state',
-          common: {
-            name: 'reported state',
-            desc: 'State smart plug',
-            type: 'string',
-            role: "info.state",
-            read: true,
-            write: false
-          },
-          native: {}
-        });
-        adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", {
-          type: 'state',
-          common: {
-            name: 'state since',
-            desc: 'State smart plug swiched state since',
-            type: 'string',
-            role: "info.state",
-            read: true,
-            write: false
-          },
-          native: {}
-        });
-        var s = new Date(messageJ.since);
-        adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true)
-        adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true)
-
-        if (plugcounter == plugnumber) {*/
         configtopics.push("plug");
-        //}
-
+        adapter.log.debug("Topic plug - no config input");
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
 
         break;
@@ -819,9 +783,9 @@ function getsmappeedata(topicarray, messageJ) {
         adapter.setState('Servicelocations.' + topicarray[1] + '.Power.voltage', messageJ.voltages[0].voltage, true);
         adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.importEnergy', function(err, obj) {
           if (obj) {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.importEnergy', 0.001 * Math.round(messageJ.totalImportEnergy / 3600), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.importEnergy', (messageJ.totalImportEnergy / 3600000).toFixed(3), true);
             for (var i = 0; i < inputchannels.length; i++) {
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseImportEnergy", 0.001 * Math.round(messageJ.channelPowers[i].importEnergy / 3600), true);
+              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseImportEnergy", (messageJ.channelPowers[i].importEnergy / 3600000).toFixed(3), true);
             }
           } else {
             adapter.log.debug("No Import Energy");
@@ -829,9 +793,9 @@ function getsmappeedata(topicarray, messageJ) {
         });
         adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', function(err, obj) {
           if (obj) {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.ExportEnergy', 0.001 * Math.round(messageJ.totalExportEnergy / 3600), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.ExportEnergy', (messageJ.totalExportEnergy / 3600000).toFixed(3), true);
             for (var i = 0; i < inputchannels.length; i++) {
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", 0.001 * Math.round(messageJ.channelPowers[i].exportEnergy / 3600), true);
+              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", (messageJ.channelPowers[i].exportEnergy / 3600000).toFixed(3), true);
             }
           } else {
             adapter.log.debug("No Export Energy");
@@ -902,7 +866,7 @@ function getsmappeedata(topicarray, messageJ) {
         break;
       case "aggregatedSwitch":
         for (i = 0; i < messageJ.switchIntervalDatas.length; i++) {
-          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".ActivePower5min", 0.001 * Math.round(messageJ.switchIntervalDatas[i].activePower / 3.6), true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".ActivePower5min", (messageJ.switchIntervalDatas[i].activePower / 3600).toFixed(2), true);
         }
         break;
 
@@ -916,7 +880,6 @@ function getsmappeedata(topicarray, messageJ) {
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".connstatesince", s.toLocaleString(), true);
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".connstate", messageJ.value, true);
         }
-
 
         break;
 
