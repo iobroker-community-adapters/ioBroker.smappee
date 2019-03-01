@@ -118,35 +118,38 @@ function main() {
   port = adapter.config.mqttport;
   username = adapter.config.mqttusername;
   password = adapter.config.mqttpassword;
-
-  client = mqtt.connect({
-    host: host,
-    port: port,
-    username: username,
-    password: password,
-  });
-
-  client.on('connect', function() {
-    adapter.setState('info.connection', true, true);
-    adapter.log.info("MQTT connected");
-    client.subscribe('servicelocation/#');
-
-    client.on('message', function(topic, message) {
-      try {
-        var messageJ = JSON.parse(message);
-        var topicarray = topic.split("/");
-        adapter.log.debug("Topic: " + topicarray[2]);
-        if (configtopics.indexOf(topicarray[2]) != -1) {
-          getsmappeedata(topicarray, messageJ);
-        } else {
-          getsmappeeconfig(topicarray, messageJ);
-        }
-
-      } catch (e) {
-        adapter.log.warn("MAIN: JSON-parse-Fehler Message: " + e.message);
-      }
+  try {
+    client = mqtt.connect({
+      host: host,
+      port: port,
+      username: username,
+      password: password,
     });
-  });
+
+    client.on('connect', function() {
+      adapter.setState('info.connection', true, true);
+      adapter.log.info("MQTT connected");
+      client.subscribe('servicelocation/#');
+
+      client.on('message', function(topic, message) {
+        try {
+          var messageJ = JSON.parse(message);
+          var topicarray = topic.split("/");
+          adapter.log.debug("Topic: " + topicarray[2]);
+          if (configtopics.indexOf(topicarray[2]) != -1) {
+            getsmappeedata(topicarray, messageJ);
+          } else {
+            getsmappeeconfig(topicarray, messageJ);
+          }
+
+        } catch (e) {
+          adapter.log.warn("MAIN: JSON-parse-Fehler Message: " + e.message);
+        }
+      });
+    });
+  } catch (e) {
+    adapter.log.warn("Main connect error: " + e);
+  }
 } //endMain
 
 function getsmappeeconfig(topicarray, messageJ) {
