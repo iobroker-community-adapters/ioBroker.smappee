@@ -1,46 +1,49 @@
 {
-	"name": "iobroker.smappee",
-	"version": "0.2.0",
-	"engines": {
-    	"node": ">=6.0.0"
-	},
-	"description": "smappee",
-	"author": {
-		"name": "Marcel Adam",
-		"email": "marceladam@gmx.ch"
-	},
-	"contributors": [
-		{
-			"name": "Marcel Adam",
-			"email": "marceladam@gmx.ch"
-		}
-	],
-	"homepage": "https://github.com/forelleblau/ioBroker.smappee",
-	"license": "MIT",
-	"keywords": [
-		"ioBroker",
-		"solarlog",
-		"Smart Home",
-		"home automation"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/forelleblau/ioBroker.smappee"
-	},
-	"dependencies": {
-		"mqtt": "^2.18.8"
-	},
-	"devDependencies": {
-		"gulp": "^4.0.0",
-		"mocha": "^4.1.0",
-		"chai": "^4.1.2"
-	},
-	"main": "main.js",
-	"scripts": {
-		"test": "node node_modules/mocha/bin/mocha --exit"
-	},
-	"bugs": {
-		"url": "https://github.com/forelleblau/ioBroker.smappee/issues"
-	},
-	"readmeFilename": "README.md"
+  "name": "iobroker.smappee",
+  "version": "0.2.0",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "description": "smappee",
+  "author": {
+    "name": "Marcel Adam",
+    "email": "marceladam@gmx.ch"
+  },
+  "contributors": [{
+    "name": "Marcel Adam",
+    "email": "marceladam@gmx.ch"
+  }],
+  "homepage": "https://github.com/forelleblau/ioBroker.smappee",
+  "license": "MIT",
+  "keywords": [
+    "ioBroker",
+    "solarlog",
+    "Smart Home",
+    "home automation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forelleblau/ioBroker.smappee"
+  },
+  "dependencies": {
+    "mqtt": "^2.18.8",
+    "@iobroker/adapter-core": "^1.0.3"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "mocha": "^6.0.0",
+    "chai": "^4.1.2",
+    "eslint": "^5.9.0",
+    "@iobroker/testing": "^1.0.4"
+  },
+  "main": "main.js",
+  "scripts": {
+    "test:unit": "node_modules/.bin/mocha test/unitAdapter --exit",
+    "test:package": "node_modules/.bin/mocha test/packageFiles --exit",
+    "test:integration": "node_modules/.bin/mocha test/integrationAdapter --exit"
+  },
+  "bugs": {
+    "url": "https://github.com/forelleblau/ioBroker.smappee/issues"
+  },
+  "readmeFilename": "README.md"
 }

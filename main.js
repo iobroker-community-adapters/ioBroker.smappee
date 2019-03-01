@@ -102,8 +102,6 @@ function startAdapter(options) {
 
   // is called when databases are connected and adapter received configuration.
   adapter.on('ready', function() {
-
-
     main();
     adapter.subscribeStates('*');
   });
