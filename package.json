@@ -9,10 +9,12 @@
     "name": "Marcel Adam",
     "email": "marceladam@gmx.ch"
   },
-  "contributors": [{
-    "name": "Marcel Adam",
-    "email": "marceladam@gmx.ch"
-  }],
+  "contributors": [
+    {
+      "name": "Marcel Adam",
+      "email": "marceladam@gmx.ch"
+    }
+  ],
   "homepage": "https://github.com/forelleblau/ioBroker.smappee",
   "license": "MIT",
   "keywords": [
@@ -29,13 +31,15 @@
     "mqtt": "^2.18.8"
   },
   "devDependencies": {
-		"gulp": "^4.0.0",
-    "mocha": "^5.2.0",
-    "chai": "^4.2.0"
+    "gulp": "^4.0.0",
+    "mocha": "^6.0.2",
+    "chai": "^4.2.0",
+    "@iobroker/adapter-core": "^1.0.3"
   },
   "main": "main.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha --exit"  },
+    "test": "node node_modules/mocha/bin/mocha --exit"
+  },
   "bugs": {
     "url": "https://github.com/forelleblau/ioBroker.smappee/issues"
   },
