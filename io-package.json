@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "smappee",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "news": {
+      "0.2.1": {
+        "en": "Core Files/Testing Update and introduce adapter-core, added counters for sensor that sum the 5-min values.",
+        "de": "Core Files/Testing Update und adapter-core eingeführt, Summenzähler für Gas_Wasser - Sensoren und  Smartswitches erstellt."
+      },
       "0.2.0": {
         "en": "Controls smart plugs and smart switches, gets states and 5-min power consumption for switchsensors in Wh.",
         "de": "Schalten von Smartplugs und Smartswitches, Verbrauchsmessung (5min) für Smartswitches in Wh und Statuswerte für Switches und Plugs."
