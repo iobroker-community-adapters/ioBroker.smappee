@@ -53,6 +53,12 @@ function startAdapter(options) {
 
     try {
       adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
+      if (id.slice(-4) == "5min") {
+        id = id.substring(adapter.namespace.length + 1);
+        state = state.val;
+        countercount(id, state);
+      }
+
 
       if (!id || state.ack) return; // Ignore acknowledged state changes or error states
       id = id.substring(adapter.namespace.length + 1); // remove instance name and id
@@ -530,9 +536,23 @@ function getsmappeeconfig(topicarray, messageJ) {
                   name: 'gwConsumption5min',
                   desc: 'GW_Sensor channel consumption last 5 min',
                   type: 'number',
-                  role: "value.gwConsumption5min",
+                  role: "value.consumption",
                   read: true,
                   write: false,
+                  unit: messageJ.gwSensors[i].gwSensorChannelsConfig[y].uom
+                },
+                native: {}
+              });
+              adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwSensors[i].sensorId + ".Channel_" + y + ".consumptionTotal", {
+                type: 'state',
+                common: {
+                  name: 'gwConsumptionTotal',
+                  desc: 'GW_Sensor channel consumption total',
+                  type: 'number',
+                  def: 1,
+                  role: "value.consumption",
+                  read: true,
+                  write: true,
                   unit: messageJ.gwSensors[i].gwSensorChannelsConfig[y].uom
                 },
                 native: {}
@@ -567,15 +587,29 @@ function getsmappeeconfig(topicarray, messageJ) {
             },
             native: {}
           });
-          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchSensors[i].sensorId + ".ActivePower5min", {
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchSensors[i].sensorId + ".consumption5min", {
             type: 'state',
             common: {
-              name: 'Consumption 5min',
+              name: 'Consumption active power 5min',
               desc: 'Switch Sensors energy consumption last 5-min value',
               type: 'number',
               role: "info.consumption",
               read: true,
               write: false,
+              unit: "Wh"
+            },
+            native: {}
+          });
+          adapter.setObjectNotExists('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchSensors[i].sensorId + ".consumptionTotal", {
+            type: 'state',
+            common: {
+              name: 'Consumption active power total',
+              desc: 'Switch Sensors energy consumption total',
+              type: 'number',
+              def: 1,
+              role: "info.consumption",
+              read: true,
+              write: true,
               unit: "Wh"
             },
             native: {}
@@ -740,6 +774,7 @@ function getsmappeeconfig(topicarray, messageJ) {
         adapter.log.debug("Anzahl Topics bearbeitet: " + configtopics.length);
 
         break;
+
       case "aggregatedSwitch":
         configtopics.push("aggregatedSwitch");
         adapter.log.debug("Topic aggregatedSwitch  - no config input");
@@ -865,9 +900,10 @@ function getsmappeedata(topicarray, messageJ) {
         adapter.setState('Servicelocations.' + topicarray[1] + '.Power.alwaysOn', (messageJ.intervalDatas[0].alwaysOn) / 1000, true);
 
         break;
+
       case "aggregatedSwitch":
         for (i = 0; i < messageJ.switchIntervalDatas.length; i++) {
-          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".ActivePower5min", (messageJ.switchIntervalDatas[i].activePower / 3600).toFixed(2), true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".consumption5min", (messageJ.switchIntervalDatas[i].activePower / 3600).toFixed(2), true);
         }
         break;
 
@@ -892,6 +928,32 @@ function getsmappeedata(topicarray, messageJ) {
   };
 } //end getsmappeedata
 
+function countercount(id, addval) {
+  try {
+    var idarray = id.split('.');
+    adapter.log.debug("idarray: " + idarray);
+    var idarrayshort = idarray.slice(1, -1);
+    var idarrayshortstring = "";
+    for (var i = 0; i < idarrayshort.length; i++) {
+      idarrayshortstring = idarrayshortstring + idarrayshort[i] + '.'
+    };
+    var idcounter = 'Servicelocations.' + idarrayshortstring + "consumptionTotal";
+    adapter.log.debug("ID Counter: " + idcounter);
+    adapter.getState(idcounter, function(err, state) {
+      if (state) {
+        adapter.log.debug("Zählerwert bisher: " + state.val);
+        adapter.log.debug("Zählerwert dazu: " + addval);
+        adapter.log.debug("Zählerwert neu: " + (addval + state.val));
+        adapter.setState(idcounter, (addval + state.val), true);
+      } else {
+        adapter.log.warn("Zähler hat keinen Wert, setze Zähler auf 1");
+        adapter.setState(idcounter, 1, true);
+      }
+    });
+  } catch (e) {
+    adapter.log.warn("Countercount - Fehler: " + e);
+  }
+} //end countercount
 
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {
