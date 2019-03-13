@@ -2,7 +2,7 @@
 
 # ioBroker.smappee
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.smappee.svg)](https://www.npmjs.com/package/iobroker.smappee)
+![Number of Installations](http://iobroker.live/badges/smappee-installed.svg) ![Number of Installations](http://iobroker.live/badges/smappee-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.smappee.svg)](https://www.npmjs.com/package/iobroker.smappee)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.smappee.svg)](https://www.npmjs.com/package/iobroker.smappee)
 
 [![NPM](https://nodei.co/npm/iobroker.smappee.png?downloads=true)](https://nodei.co/npm/iobroker.smappee/)
