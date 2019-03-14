@@ -69,10 +69,14 @@ Smappee allows you to remotly control smart plugs / smart switches. Either smapp
 
 ## Changelog
 
+### 0.2.2
+
+-   Readme - update.
+
 ### 0.2.1
+
 -   Core Files/Testing Update and introduce adapter-core.
 -   added counters for sensor that sum the 5-min values.
-
 
 ### 0.2.0
 

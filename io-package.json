@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "smappee",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "news": {
+      "0.2.2": {
+        "en": "Readme - update.",
+        "de": "Readme - update."
+      },
       "0.2.1": {
         "en": "Core Files/Testing Update and introduce adapter-core, added counters for sensor that sum the 5-min values.",
         "de": "Core Files/Testing Update und adapter-core eingeführt, Summenzähler für Gas_Wasser - Sensoren und  Smartswitches erstellt."
