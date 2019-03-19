@@ -26,6 +26,8 @@ Set username and password (you will need this for smappee- and smappee-Adapter c
 
 ![ioBMC](https://github.com/forelleblau/ioBroker.smappee/blob/master/admin/ioBrokerMQTTConfig.PNG)
 
+In the MQTT-Settings tab, the 'Publish only on change' checkbox has to be checked.
+
 ### Activation of Smappee's MQTT publishing.
 
 Open your browser and avigate to the URL: <http://X.X.X.X/smappee.html> (replace X.X.X.X by Smappee's IP address in your network).
