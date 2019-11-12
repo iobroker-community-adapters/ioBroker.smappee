@@ -70,7 +70,7 @@
     "icon": "smappee.png",
     "materialize": true,
     "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/forelleblau/ioBroker.smappee/master/admin/smappee.png",
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.smappee/master/admin/smappee.png",
     "keywords": [
       "smappee",
       "smarthome",
@@ -78,7 +78,7 @@
       "smartmeter",
       "water"
     ],
-    "readme": "https://github.com/forelleblau/ioBroker.smappee/blob/master/README.md",
+    "readme": "https://github.com/iobroker-community-adapters/ioBroker.smappee/blob/master/README.md",
     "loglevel": "info",
     "type": "energy",
     "license": "MIT",
