@@ -15,7 +15,7 @@
       "email": "marceladam@gmx.ch"
     }
   ],
-  "homepage": "https://github.com/forelleblau/ioBroker.smappee",
+  "homepage": "https://github.com/iobroker-community-adapters/ioBroker.smappee",
   "license": "MIT",
   "keywords": [
     "ioBroker",
@@ -25,7 +25,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/forelleblau/ioBroker.smappee"
+    "url": "https://github.com/iobroker-community-adapters/ioBroker.smappee"
   },
   "dependencies": {
     "mqtt": "^2.18.8",
@@ -45,7 +45,7 @@
     "test:integration": "mocha test/integration --exit"
   },
   "bugs": {
-    "url": "https://github.com/forelleblau/ioBroker.smappee/issues"
+    "url": "https://github.com/iobroker-community-adapters/ioBroker.smappee/issues"
   },
   "readmeFilename": "README.md"
 }
