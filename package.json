@@ -2,19 +2,17 @@
   "name": "iobroker.smappee",
   "version": "0.2.2",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "description": "smappee",
   "author": {
     "name": "Marcel Adam",
     "email": "marceladam@gmx.ch"
   },
-  "contributors": [
-    {
-      "name": "Marcel Adam",
-      "email": "marceladam@gmx.ch"
-    }
-  ],
+  "contributors": [{
+    "name": "Marcel Adam",
+    "email": "marceladam@gmx.ch"
+  }],
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.smappee",
   "license": "MIT",
   "keywords": [
