@@ -26,12 +26,16 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.smappee"
   },
   "dependencies": {
-    "mqtt": "^4.2.6",
+
+    "mqtt": "^4.2.1",
+
     "@iobroker/adapter-core": "^2.2.1"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
-    "mocha": "^8.2.1",
+
+    "mocha": "^8.1.3",
+
     "chai": "^4.2.0",
     "@iobroker/testing": "^2.1.0"
   },
