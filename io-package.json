@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "smappee",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "news": {
+      "0.2.3": {
+        "en": "'switchON' state is updated with actual state of a plug.",
+        "de": "switchON wird mit state aktualisiert"
+      },
       "0.2.2": {
         "en": "Readme - update.",
         "de": "Readme - update."

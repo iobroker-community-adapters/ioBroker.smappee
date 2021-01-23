@@ -912,6 +912,11 @@ function getsmappeedata(topicarray, messageJ) {
           var s = new Date(messageJ.since);
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true);
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true);
+          if (messageJ.value == "ON") {
+            adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".switchON", true, true);
+          } else if (messageJ.value == "OFF") {
+            adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".switchON", false, true);
+          }
         } else if (topicarray[4] == "connectionState") {
           var s = new Date(messageJ.since);
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".connstatesince", s.toLocaleString(), true);

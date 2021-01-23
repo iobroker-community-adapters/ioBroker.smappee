@@ -1,6 +1,6 @@
 {
   "name": "iobroker.smappee",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "engines": {
     "node": ">=10.0.0"
   },
@@ -26,12 +26,12 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.smappee"
   },
   "dependencies": {
-    "mqtt": "^3.0.0",
+    "mqtt": "^4.2.6",
     "@iobroker/adapter-core": "^2.2.1"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
-    "mocha": "^7.1.1",
+    "mocha": "^8.2.1",
     "chai": "^4.2.0",
     "@iobroker/testing": "^2.1.0"
   },
