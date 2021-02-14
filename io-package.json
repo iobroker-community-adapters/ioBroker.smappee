@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "smappee",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "news": {
+      "0.2.4": {
+        "en": "bugfix (Power.energyExport).",
+        "de": "Fehler behoben (Power.energyExport)."
+      },
       "0.2.3": {
         "en": "'switchON' state is updated with actual state of a plug.",
         "de": "switchON wird mit state aktualisiert"
