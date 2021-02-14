@@ -829,7 +829,7 @@ function getsmappeedata(topicarray, messageJ) {
         });
         adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', function(err, obj) {
           if (obj) {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.ExportEnergy', (messageJ.totalExportEnergy / 3600000).toFixed(3), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', (messageJ.totalExportEnergy / 3600000).toFixed(3), true);
             for (var i = 0; i < inputchannels.length; i++) {
               adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", (messageJ.channelPowers[i].exportEnergy / 3600000).toFixed(3), true);
             }
