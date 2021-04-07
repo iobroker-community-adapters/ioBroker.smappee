@@ -27,7 +27,7 @@
   },
   "dependencies": {
 
-    "mqtt": "^4.2.1",
+    "mqtt": "^4.2.6",
 
     "@iobroker/adapter-core": "^2.2.1"
   },
