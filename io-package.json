@@ -90,7 +90,9 @@
     "loglevel": "info",
     "type": "energy",
     "license": "MIT",
-    "messagebox": false
+    "messagebox": false,
+    "connectionType": "local",
+    "dataSource": "push"
   },
   "native": {
     "mqtthost": "localhost",
