@@ -221,7 +221,7 @@ function getsmappeeconfig(topicarray, messageJ) {
           common: {
             name: 'ServLocID',
             desc: 'Service Location ID',
-            type: 'string',
+            type: 'number',
             role: "info.ServLocID",
             read: true,
             write: false
@@ -311,7 +311,7 @@ function getsmappeeconfig(topicarray, messageJ) {
             common: {
               name: 'consumption',
               desc: 'Energy consumption',
-              type: 'number',
+              type: 'string',
               role: "value.consumption",
               read: true,
               write: false,
@@ -357,7 +357,7 @@ function getsmappeeconfig(topicarray, messageJ) {
               common: {
                 name: 'Phase consumption',
                 desc: 'Energy consumption on Phase',
-                type: 'number',
+                type: 'string',
                 role: "value.production",
                 read: true,
                 write: false,
