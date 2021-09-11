@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "smappee",
-    "version": "0.2.5",
+    "version": "0.2.6",
     "news": {
+      "0.2.6": {
+        "en": "bugfix (type-error).",
+        "de": "Fehler behoben (Variablentyp)."
+      },
       "0.2.5": {
         "en": "bugfix (js-controller 3.3.x).",
         "de": "Fehler behoben (js-controller 3.3.x)."

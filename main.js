@@ -311,7 +311,7 @@ function getsmappeeconfig(topicarray, messageJ) {
             common: {
               name: 'consumption',
               desc: 'Energy consumption',
-              type: 'string',
+              type: 'number',
               role: "value.consumption",
               read: true,
               write: false,
@@ -357,7 +357,7 @@ function getsmappeeconfig(topicarray, messageJ) {
               common: {
                 name: 'Phase consumption',
                 desc: 'Energy consumption on Phase',
-                type: 'string',
+                type: 'number',
                 role: "value.production",
                 read: true,
                 write: false,
@@ -815,13 +815,13 @@ function getsmappeedata(topicarray, messageJ) {
   try {
     switch (topicarray[2]) {
       case "realtime":
-        adapter.setState('Servicelocations.' + topicarray[1] + '.Power.totalPower', messageJ.totalPower, true);
-        adapter.setState('Servicelocations.' + topicarray[1] + '.Power.voltage', messageJ.voltages[0].voltage, true);
+        adapter.setState('Servicelocations.' + topicarray[1] + '.Power.totalPower', parseInt(messageJ.totalPower), true);
+        adapter.setState('Servicelocations.' + topicarray[1] + '.Power.voltage', parseInt(messageJ.voltages[0].voltage), true);
         adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.importEnergy', function(err, obj) {
           if (obj) {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.importEnergy', (messageJ.totalImportEnergy / 3600000).toFixed(3), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.importEnergy', (parseInt(messageJ.totalImportEnergy) / 3600000).toFixed(3), true);
             for (var i = 0; i < inputchannels.length; i++) {
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseImportEnergy", (messageJ.channelPowers[i].importEnergy / 3600000).toFixed(3), true);
+              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseImportEnergy", (parseInt(messageJ.channelPowers[i].importEnergy) / 3600000).toFixed(3), true);
             }
           } else {
             adapter.log.debug("No Import Energy");
@@ -829,16 +829,16 @@ function getsmappeedata(topicarray, messageJ) {
         });
         adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', function(err, obj) {
           if (obj) {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', (messageJ.totalExportEnergy / 3600000).toFixed(3), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', (parseInt(messageJ.totalExportEnergy) / 3600000).toFixed(3), true);
             for (var i = 0; i < inputchannels.length; i++) {
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", (messageJ.channelPowers[i].exportEnergy / 3600000).toFixed(3), true);
+              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", (parseInt(messageJ.channelPowers[i].exportEnergy) / 3600000).toFixed(3), true);
             }
           } else {
             adapter.log.debug("No Export Energy");
           }
         });
         for (var i = 0; i < inputchannels.length; i++) {
-          adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phasePower", messageJ.channelPowers[i].power, true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phasePower", parseInt(messageJ.channelPowers[i].power), true);
           adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseId", messageJ.channelPowers[i].phaseId, true);
         }
         break;
@@ -877,18 +877,18 @@ function getsmappeedata(topicarray, messageJ) {
 
       case "aggregatedGW":
         for (var aGWcount = 0; aGWcount < messageJ.gwIntervalDatas.length; aGWcount++) {
-          adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".temperature", (messageJ.gwIntervalDatas[aGWcount].temperature) / 10, true);
-          adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".humidity", messageJ.gwIntervalDatas[aGWcount].humidity, true);
-          adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".battLevel", messageJ.gwIntervalDatas[aGWcount].battLevel, true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".temperature", (parseInt(messageJ.gwIntervalDatas[aGWcount].temperature)) / 10, true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".humidity", parseInt(messageJ.gwIntervalDatas[aGWcount].humidity), true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".battLevel", parseInt(messageJ.gwIntervalDatas[aGWcount].battLevel), true);
 
           try {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".Channel_0.consumption5min", (messageJ.gwIntervalDatas[aGWcount].index0Delta) / (JSON.parse(gwSensorChannelsConfigArr[messageJ.gwIntervalDatas[aGWcount].sensorId])[0].ppu), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".Channel_0.consumption5min", (parseInt(messageJ.gwIntervalDatas[aGWcount].index0Delta)) / (JSON.parse(gwSensorChannelsConfigArr[messageJ.gwIntervalDatas[aGWcount].sensorId])[0].ppu), true);
           } catch (e) {
             adapter.log.debug("SensorId: " + messageJ.gwIntervalDatas[aGWcount].sensorId + " : no Water Sensor or consumption5min - error: " + e);
           }
 
           try {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".Channel_1.consumption5min", (messageJ.gwIntervalDatas[aGWcount].index1Delta) / (JSON.parse(gwSensorChannelsConfigArr[messageJ.gwIntervalDatas[aGWcount].sensorId])[1].ppu), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Gas_Water_Sensors.' + messageJ.gwIntervalDatas[aGWcount].sensorId + ".Channel_1.consumption5min", (parseInt(messageJ.gwIntervalDatas[aGWcount].index1Delta)) / (JSON.parse(gwSensorChannelsConfigArr[messageJ.gwIntervalDatas[aGWcount].sensorId])[1].ppu), true);
           } catch (e) {
             adapter.log.debug("SensorId: " + messageJ.gwIntervalDatas[aGWcount].sensorId + " : no Gas Sensor or consumptionTotal - error: " + e);
           }
@@ -897,13 +897,13 @@ function getsmappeedata(topicarray, messageJ) {
         break;
 
       case "aggregated":
-        adapter.setState('Servicelocations.' + topicarray[1] + '.Power.alwaysOn', (messageJ.intervalDatas[0].alwaysOn) / 1000, true);
+        adapter.setState('Servicelocations.' + topicarray[1] + '.Power.alwaysOn', (parseInt(messageJ.intervalDatas[0].alwaysOn)) / 1000, true);
 
         break;
 
       case "aggregatedSwitch":
         for (i = 0; i < messageJ.switchIntervalDatas.length; i++) {
-          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".consumption5min", (messageJ.switchIntervalDatas[i].activePower / 3600).toFixed(2), true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".consumption5min", (parseInt(messageJ.switchIntervalDatas[i].activePower) / 3600).toFixed(2), true);
         }
         break;
 
