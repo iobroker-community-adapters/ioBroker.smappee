@@ -819,9 +819,9 @@ function getsmappeedata(topicarray, messageJ) {
         adapter.setState('Servicelocations.' + topicarray[1] + '.Power.voltage', parseInt(messageJ.voltages[0].voltage), true);
         adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.importEnergy', function(err, obj) {
           if (obj) {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.importEnergy', (parseInt(messageJ.totalImportEnergy) / 3600000).toFixed(3), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.importEnergy', parseFloat((messageJ.totalImportEnergy / 3600000).toFixed(3)), true);
             for (var i = 0; i < inputchannels.length; i++) {
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseImportEnergy", (parseInt(messageJ.channelPowers[i].importEnergy) / 3600000).toFixed(3), true);
+              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseImportEnergy", parseFloat((messageJ.channelPowers[i].importEnergy / 3600000).toFixed(3)), true);
             }
           } else {
             adapter.log.debug("No Import Energy");
@@ -829,9 +829,9 @@ function getsmappeedata(topicarray, messageJ) {
         });
         adapter.getObject('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', function(err, obj) {
           if (obj) {
-            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', (parseInt(messageJ.totalExportEnergy) / 3600000).toFixed(3), true);
+            adapter.setState('Servicelocations.' + topicarray[1] + '.Power.exportEnergy', parseFloat((messageJ.totalExportEnergy / 3600000).toFixed(3)), true);
             for (var i = 0; i < inputchannels.length; i++) {
-              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", (parseInt(messageJ.channelPowers[i].exportEnergy) / 3600000).toFixed(3), true);
+              adapter.setState('Servicelocations.' + topicarray[1] + '.Power.CT_Input.' + messageJ.channelPowers[i].ctInput + ".phaseExportEnergy", parseFloat((messageJ.channelPowers[i].exportEnergy / 3600000).toFixed(3)), true);
             }
           } else {
             adapter.log.debug("No Export Energy");
@@ -903,7 +903,7 @@ function getsmappeedata(topicarray, messageJ) {
 
       case "aggregatedSwitch":
         for (i = 0; i < messageJ.switchIntervalDatas.length; i++) {
-          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".consumption5min", (parseInt(messageJ.switchIntervalDatas[i].activePower) / 3600).toFixed(2), true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.SwitchSensors.' + messageJ.switchIntervalDatas[i].sensorId + ".consumption5min", parseFloat((messageJ.switchIntervalDatas[i].activePower / 3600).toFixed(2)), true);
         }
         break;
 
