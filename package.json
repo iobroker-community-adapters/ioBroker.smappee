@@ -9,10 +9,12 @@
     "name": "Marcel Adam",
     "email": "marceladam@gmx.ch"
   },
-  "contributors": [{
-    "name": "Marcel Adam",
-    "email": "marceladam@gmx.ch"
-  }],
+  "contributors": [
+    {
+      "name": "Marcel Adam",
+      "email": "marceladam@gmx.ch"
+    }
+  ],
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.smappee",
   "license": "MIT",
   "keywords": [
@@ -26,18 +28,14 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.smappee"
   },
   "dependencies": {
-
-    "mqtt": "^4.2.6",
-
-    "@iobroker/adapter-core": "^2.2.1"
+    "@iobroker/adapter-core": "^2.2.1",
+    "mqtt": "^4.2.6"
   },
   "devDependencies": {
-    "gulp": "^4.0.0",
-
-    "mocha": "^10.0.0",
-
+    "@iobroker/testing": "^4.1.0",
     "chai": "^4.2.0",
-    "@iobroker/testing": "^4.1.0"
+    "gulp": "^3.9.1",
+    "mocha": "^10.0.0"
   },
   "main": "main.js",
   "scripts": {
