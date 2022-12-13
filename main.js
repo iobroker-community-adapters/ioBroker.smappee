@@ -333,7 +333,7 @@ function getsmappeeconfig(topicarray, messageJ) {
               unit: "kWh"
             },
             native: {}
-          });
+          }); 
         }
         for (var cleng = 0; cleng < messageJ.channelPowers.length; cleng++) {
           if (messageJ.channelPowers[cleng].exportEnergy != 0) {
