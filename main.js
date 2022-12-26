@@ -109,7 +109,7 @@ function startAdapter(options) {
   // is called when databases are connected and adapter received configuration.
   adapter.on('ready', function() {
     main();
-    //adapter.subscribeStates('*');
+    adapter.subscribeStates('*.switchON');
   });
 
   return adapter;
@@ -911,7 +911,7 @@ function getsmappeedata(topicarray, messageJ) {
         if (topicarray[4] == "state") {
           var s = new Date(messageJ.since);
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true);
-          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value.toString(), true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true);
           if (messageJ.value == "ON") {
             adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".switchON", true, true);
           } else if (messageJ.value == "OFF") {
