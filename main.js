@@ -333,7 +333,7 @@ function getsmappeeconfig(topicarray, messageJ) {
               unit: "kWh"
             },
             native: {}
-          }); 
+          });
         }
         for (var cleng = 0; cleng < messageJ.channelPowers.length; cleng++) {
           if (messageJ.channelPowers[cleng].exportEnergy != 0) {
@@ -911,7 +911,7 @@ function getsmappeedata(topicarray, messageJ) {
         if (topicarray[4] == "state") {
           var s = new Date(messageJ.since);
           adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".statesince", s.toLocaleString(), true);
-          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value, true);
+          adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".state", messageJ.value.toString(), true);
           if (messageJ.value == "ON") {
             adapter.setState('Servicelocations.' + topicarray[1] + '.plug.' + topicarray[3] + ".switchON", true, true);
           } else if (messageJ.value == "OFF") {
