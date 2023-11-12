@@ -1,0 +1,13 @@
+{
+    "Auto": "Авто",
+    "Manual": "Інструкція",
+    "My select": "Мій вибір",
+    "host": "Solarlog IP:",
+    "invimp": "Імпортуйте всі дані інвертора. !! Пароль користувача в Solarlog має бути дезактивований",
+    "on save adapter restarts with new config immediately": "під час збереження адаптер негайно перезавантажується з новою конфігурацією",
+    "pollInterval": "Опитування - Інтервал (мс):",
+    "port": "",
+    "template adapter settings": "налаштування адаптера шаблону",
+    "test1": "",
+    "test2": ""
+}

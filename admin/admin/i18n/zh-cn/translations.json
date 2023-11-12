@@ -1,0 +1,13 @@
+{
+    "Auto": "汽车",
+    "Manual": "手动的",
+    "My select": "我的选择",
+    "host": "太阳能日志IP：",
+    "invimp": "导入所有逆变器数据。 !! Solarlog 中的用户密码必须停用",
+    "on save adapter restarts with new config immediately": "保存适配器后立即使用新配置重新启动",
+    "pollInterval": "轮询 - 间隔（毫秒）：",
+    "port": "",
+    "template adapter settings": "模板适配器设置",
+    "test1": "",
+    "test2": ""
+}

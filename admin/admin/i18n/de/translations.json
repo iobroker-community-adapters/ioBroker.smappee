@@ -1,0 +1,13 @@
+{
+    "Auto": "Auto",
+    "Manual": "Manual",
+    "My select": "Mein Auswahl",
+    "host": "Solarlog IP:",
+    "invimp": "Unterzaehler-Abfrage. Achtung! Benutzer-Passwort im Solarlog muss deaktiviert sein",
+    "on save adapter restarts with new config immediately": "Beim Speichern von Einstellungen der Adapter wird sofort neu gestartet.",
+    "pollInterval": "Abfrage - Intervall (ms):",
+    "port": "Port",
+    "template adapter settings": "Beispiel",
+    "test1": "",
+    "test2": ""
+}

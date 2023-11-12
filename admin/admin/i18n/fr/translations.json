@@ -1,0 +1,13 @@
+{
+    "Auto": "Auto",
+    "Manual": "Manuel",
+    "My select": "Mon choix",
+    "host": "IP du journal solaire :",
+    "invimp": "Importez toutes les données de l'onduleur. !! Le mot de passe utilisateur dans Solarlog doit être désactivé",
+    "on save adapter restarts with new config immediately": "sur l'adaptateur de sauvegarde redémarre avec la nouvelle config immédiatement",
+    "pollInterval": "Interrogation - Intervalle (ms) :",
+    "port": "",
+    "template adapter settings": "paramètres de l'adaptateur de modèle",
+    "test1": "Test 1",
+    "test2": "Test 2"
+}
