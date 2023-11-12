@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@iobroker/testing": "^4.1.0",
+    "@iobroker/adapter-dev": "^1.2.0",
     "@types/chai": "^4.3.9",
     "@types/chai-as-promised": "^7.1.7",
     "@types/gulp": "^4.0.16",
@@ -61,7 +62,9 @@
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
     "check": "tsc --noEmit -p tsconfig.check.json",
-    "lint": "eslint"
+    "lint": "eslint",
+    "translate": "translate-adapter",
+    "build": "build-adapter"
   },
   "files": [
     "admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json",
