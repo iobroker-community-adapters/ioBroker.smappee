@@ -257,8 +257,12 @@
     ],
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.smappee/blob/master/README.md",
     "loglevel": "info",
+    "tier": 2,
     "type": "energy",
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "messagebox": false,
     "connectionType": "local",
     "dataSource": "push"
