@@ -28,7 +28,7 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.smappee"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.1.4",
+    "@iobroker/adapter-core": "^3.1.6",
     "mqtt": "^5.5.5"
   },
   "devDependencies": {
