@@ -128,9 +128,7 @@
     "mode": "daemon",
     "compact": true,
     "icon": "smappee.png",
-    "adminUI": {
-      "config": "json"
-    },
+    "materialize": true,
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.smappee/master/admin/smappee.png",
     "keywords": [
