@@ -5,15 +5,10 @@
     "node": ">=18"
   },
   "description": "smappee",
-  "author": {
-    "name": "Marcel Adam",
-    "email": "marceladam@gmx.ch"
-  },
+  "author": "Marcel Adam <marceladam@gmx.ch>",
   "contributors": [
-    {
-      "name": "Marcel Adam",
-      "email": "marceladam@gmx.ch"
-    }
+    "Marcel Adam <marceladam@gmx.ch>",
+    "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
   ],
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.smappee",
   "license": "MIT",
