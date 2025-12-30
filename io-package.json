@@ -122,7 +122,8 @@
       "zh-cn": "监视和控制您的 smappee 设备"
     },
     "authors": [
-      "forelleblau <marceladam@gmx.ch>"
+      "forelleblau <marceladam@gmx.ch>",
+      "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
     ],
     "platform": "Javascript/Node.js",
     "mode": "daemon",
@@ -148,7 +149,17 @@
     },
     "messagebox": false,
     "connectionType": "local",
-    "dataSource": "push"
+    "dataSource": "push",
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.6.17"
+      }
+    ]
   },
   "native": {
     "mqtthost": "localhost",
