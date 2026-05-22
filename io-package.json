@@ -130,6 +130,9 @@
     "compact": true,
     "icon": "smappee.png",
     "materialize": true,
+    "adminUI": {
+      "config": "json"
+    },
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.smappee/master/admin/smappee.png",
     "keywords": [

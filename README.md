@@ -80,6 +80,7 @@ Smappee allows you to remotly control smart plugs / smart switches. Either smapp
 - (copilot) Adapter requires admin >= 7.7.22 now
 - (copilot) Adapter requires js-controller >= 6.0.11 now
 - (copilot) Adapter requires admin >= 7.6.17 now
+- (copilot) **ENHANCED**: Migrated admin configuration to jsonConfig and added short-form admin i18n files
 
 ### 0.3.0 (2024-04-26)
 * (mcm1957) Adapter requires node.js >= 18 and js-controller >= 5 now
