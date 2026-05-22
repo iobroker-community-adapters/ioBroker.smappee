@@ -1,0 +1,8 @@
+{
+    "mqtthost": "Teste 2",
+    "mqttport": "Teste 2",
+    "mqttusername": "Teste 2",
+    "mqttpassword": "Teste 1",
+    "Optional connection data": "Teste 2",
+    "on save adapter restarts with new config immediately": "no adaptador de salvar reinicia com nova configuração imediatamente"
+}

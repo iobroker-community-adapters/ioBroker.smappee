@@ -1,0 +1,8 @@
+{
+    "mqtthost": "MQTT - Broker - IP (optional):",
+    "mqttport": "MQTT - Broker - Port (optional):",
+    "mqttusername": "MQTT - Broker - username",
+    "mqttpassword": "MQTT - Broker - password",
+    "Optional connection data": "Optional connection data",
+    "on save adapter restarts with new config immediately": "on save adapter restarts with new config immediately"
+}

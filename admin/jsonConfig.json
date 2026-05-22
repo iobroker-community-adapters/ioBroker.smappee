@@ -1,0 +1,62 @@
+{
+    "i18n": true,
+    "type": "panel",
+    "items": {
+        "mqttusername": {
+            "type": "text",
+            "label": "mqttusername",
+            "xs": 12,
+            "sm": 6,
+            "md": 6,
+            "lg": 6,
+            "xl": 6
+        },
+        "mqttpassword": {
+            "type": "password",
+            "label": "mqttpassword",
+            "xs": 12,
+            "sm": 6,
+            "md": 6,
+            "lg": 6,
+            "xl": 6
+        },
+        "_optionalConnectionData": {
+            "newLine": true,
+            "type": "staticText",
+            "text": "Optional connection data",
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "mqtthost": {
+            "type": "text",
+            "label": "mqtthost",
+            "xs": 12,
+            "sm": 6,
+            "md": 6,
+            "lg": 6,
+            "xl": 6
+        },
+        "mqttport": {
+            "type": "number",
+            "label": "mqttport",
+            "xs": 12,
+            "sm": 6,
+            "md": 6,
+            "lg": 6,
+            "xl": 6
+        },
+        "_saveInfo": {
+            "newLine": true,
+            "type": "staticText",
+            "text": "on save adapter restarts with new config immediately",
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        }
+    }
+}
